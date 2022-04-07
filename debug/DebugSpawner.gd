@@ -1,16 +1,20 @@
 extends Node2D
 
+var spawn_positions = null
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var Enemy = preload("res://enemies/BasicEnemy.tscn")
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	randomize()
+	spawn_positions = $SpawnPositions.get_children()
+
+func spawn_enemy():
+	var index = randi() % spawn_positions.size()
+	var enemy = Enemy.instance()
+	enemy.global_position = spawn_positions[index].global_position
+	enemy.connect("dead", get_tree().current_scene, "score")
+	add_child(enemy)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_SpawnTimer_timeout():
+	spawn_enemy()
