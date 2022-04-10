@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/background_1.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://In-Level.gd" type="Script" id=3]
 [ext_resource path="res://debug/DebugSpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://debug/DebugQuit.gd" type="Script" id=5]
 
 [node name="In-Level" type="Node2D"]
 script = ExtResource( 3 )
@@ -18,3 +19,11 @@ region_rect = Rect2( 0, 0, 320, 240 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 219 )
+
+[node name="DebugQuit" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 5 )
+
+[connection signal="spawn_primary" from="Player" to="." method="_on_Player_spawn_primary"]

@@ -13,7 +13,7 @@ func _physics_process(delta):
 	
 	global_position += input_vector * speed * delta
 	
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_just_pressed("primary_shoot"):
 		shoot_primary()
 
 func take_damage(damage):

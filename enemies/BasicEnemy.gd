@@ -14,6 +14,6 @@ func take_damage(damage):
 		emit_signal("dead")
 		queue_free()
 
-func _on_Enemy1_area_entered(area):
+func _on_BasicEnemy_area_entered(area):
 	if area is Player:
 		area.take_damage(1)
