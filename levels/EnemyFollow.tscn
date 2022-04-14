@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://enemies/BasicEnemy.gd" type="Script" id=1]
+[ext_resource path="res://levels/EnemyFollow.gd" type="Script" id=2]
+[ext_resource path="res://enemies/BasicEnemy.tscn" type="PackedScene" id=3]
+
+[node name="EnemyFollow" type="PathFollow2D"]
+position = Vector2( 1, 90 )
+rotation = 0.013157
+rotate = false
+loop = false
+script = ExtResource( 2 )
+
+[node name="BasicEnemy" type="Area2D" parent="." groups=["enemies"] instance=ExtResource( 3 )]
+script = ExtResource( 1 )
+
+[connection signal="area_entered" from="BasicEnemy" to="BasicEnemy" method="_on_BasicEnemy_area_entered"]

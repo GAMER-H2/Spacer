@@ -4,9 +4,14 @@ signal dead
 
 export (int) var speed = 100
 var hp = 1
+onready var pathfollow = get_parent()
+
+export (String, "path", "ai") var state = "path"
 
 func _physics_process(delta):
-	global_position.y += speed * delta
+	#global_position.y += speed * delta
+	rotation = 0
+	#pathfollow.offset += speed * delta
 
 func take_damage(damage):
 	hp -= damage

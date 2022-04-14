@@ -1,15 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/enemies/sprite_turret_enemy0.png" type="Texture" id=1]
 [ext_resource path="res://enemies/TurretEnemy.gd" type="Script" id=2]
+[ext_resource path="res://assets/enemies/sprite_turret_enemy4.png" type="Texture" id=3]
 
 [node name="TurretEnemy" type="Area2D" groups=["enemies"]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -4, 2 )
+position = Vector2( 0, 2 )
 scale = Vector2( 1.8, 1.8 )
 texture = ExtResource( 1 )
+offset = Vector2( -2, 0 )
+
+[node name="GunSprite" type="Sprite" parent="."]
+scale = Vector2( 1.8, 1.8 )
+texture = ExtResource( 3 )
+offset = Vector2( -2, 0 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -13, -17, 12, -17, 17, -12, 17, 12, 12, 17, -13, 17, -18, 12, -18, -12 )
