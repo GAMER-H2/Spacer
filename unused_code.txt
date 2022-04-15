@@ -1,0 +1,20 @@
+"""if (state == "debug"):
+		if (!positioned):
+			if (global_position.x < defaultPosX):
+				global_position.x += speed * delta
+				print("X+: " + str(global_position.x))
+			elif (global_position.x > defaultPosX):
+				global_position.x -= speed * delta
+				print("X-: " + str(global_position.x))
+			if (global_position.y < defaultPosY):
+				global_position.y += speed * delta
+				print("Y+: " + str(global_position.y))
+			elif (global_position.y > defaultPosY):
+				global_position.y -= speed * delta
+				print("Y-: " + str(global_position.y))
+		else:
+			print("reached")
+		if (defaultRangeX[0] > global_position.x and global_position.x < defaultRangeX[1] and defaultRangeY[0] > global_position.y and global_position.y < defaultRangeY[1]):
+			global_position.x = defaultPosX
+			global_position.y = defaultPosY
+			positioned = true"""
