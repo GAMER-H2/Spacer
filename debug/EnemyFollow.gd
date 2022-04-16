@@ -1,9 +1,9 @@
 extends PathFollow2D
 
-export var speed = 100
+export var speed = 150
 
 func _process(delta):
 	set_offset(get_offset() + speed * delta)
 	
-	if (get_node_or_null("BasicEnemy") != null and get_unit_offset() == 1):
-		$BasicEnemy.state = "ai"
+	if (get_child_count() != 0 and get_unit_offset() == 1):
+		get_child(0).state = "ai"

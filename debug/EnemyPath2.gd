@@ -1,10 +1,10 @@
 extends Path2D
 
 var timer = 0
-var spawnTime = 0.5
-var enemy = preload("res://debug/EnemyFollow.tscn")
+var spawnTime = 2
+var enemy = preload("res://debug/EnemyFollow2.tscn")
 var enemyCount = 0
-const enemyLimit = 20
+const enemyLimit = 10
 
 func _process(delta):
 	timer = timer + delta

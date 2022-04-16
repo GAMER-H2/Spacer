@@ -2,53 +2,64 @@ extends Area2D
 
 signal dead
 
-export (int) var speed = 100
-var hp = 1
+export (int) var speed = 75
+export (String, "path", "ai", "debug") var state = "path"
 onready var pathfollow = get_parent()
-var velocity = Vector2(0,0)
+
 const defaultPos = Vector2(160,69)
-var wanderPos = Vector2(160,69)
-const wanderLimitX = 320
+const wanderLimitX = 310
 const wanderLimitY = 100
-#const defaultPosX = 160
-#const defaultRangeX = [158, 162]
-#const defaultPosY = 69
-#const defaultRangeY = [67, 71]
+const wanderMin = 10
+
+var hp = 1
+var velocity = Vector2(0,0)
+var wanderPos = Vector2(160,69)
 var positioned = false
 var rng = RandomNumberGenerator.new()
+var stillCount = 0
 
-export (String, "path", "ai", "debug") var state = "path"
+func _ready( ):
+	rng.randomize()
 
 func _physics_process(delta):
 	#global_position.y += speed * delta
-	#rotation = 0
-	#pathfollow.offset += speed * delta
+	var angle = (get_angle_to(wanderPos))
 	if (state == "ai"):
 		if (!positioned):
-			var angle = get_angle_to(defaultPos)
-			velocity.x = cos(angle)
-			velocity.y = sin(angle)
-			global_position += velocity * min(speed * delta, (defaultPos - global_position).length())
-			if (angle == get_angle_to(defaultPos)):
-				positioned = true
+			goToCentre(delta)
 		else:
-			var angle = get_angle_to(wanderPos)
-			velocity.x = cos(angle)
-			velocity.y = sin(angle)
-			global_position += velocity * min(speed * delta, (wanderPos - global_position).length())
+			wander(delta)
 			if (angle == get_angle_to(wanderPos)):
-				var targetX = rng.randf_range((global_position.x - 100), (global_position.x + 100)) + 20
-				var targetY = rng.randf_range((global_position.y - 100), (global_position.y + 100)) + 20
-				if (targetX < 0):
-					targetX = 0
-				elif (targetX > wanderLimitX):
-					targetX = wanderLimitX
-				if (targetY < 0):
-					targetY = 0
-				elif (targetY > wanderLimitY):
-					targetY = wanderLimitY
-				wanderPos = Vector2(targetX, targetY)
-	
+				stillCount += 1
+			if (stillCount == 5):
+				stillCount = 0
+				positioned = false
+
+func goToCentre(delta):
+	var angle = get_angle_to(defaultPos)
+	velocity.x = cos(angle)
+	velocity.y = sin(angle)
+	global_position += velocity * min(speed * delta, (defaultPos - global_position).length())
+	if (angle == get_angle_to(defaultPos)):
+		positioned = true
+
+func wander(delta):
+	var angle = get_angle_to(wanderPos)
+	velocity.x = cos(angle)
+	velocity.y = sin(angle)
+	global_position += velocity * min(speed * delta, (wanderPos - global_position).length())
+	if (angle == get_angle_to(wanderPos)):
+		var targetX = rng.randf_range((global_position.x - 50) - 20, (global_position.x + 50) + 20)
+		var targetY = rng.randf_range((global_position.y - 50) - 20, (global_position.y + 50) + 20)
+		if (targetX < wanderMin):
+			targetX = wanderMin
+		elif (targetX > wanderLimitX):
+			targetX = wanderLimitX
+		if (targetY < wanderMin):
+			targetY = wanderMin
+		elif (targetY > wanderLimitY):
+			targetY = wanderLimitY
+		wanderPos = Vector2(targetX, targetY)
 
 func take_damage(damage):
 	hp -= damage
