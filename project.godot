@@ -70,6 +70,10 @@ debug_quit={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_2="SoftCollisions"
+
 [physics]
 
 common/enable_pause_aware_picking=true
