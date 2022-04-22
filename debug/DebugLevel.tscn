@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://debug/DebugQuit.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://debug/DebugLevel.gd" type="Script" id=6]
 [ext_resource path="res://debug/EnemyFollow2.tscn" type="PackedScene" id=7]
 [ext_resource path="res://debug/EnemyPath2.gd" type="Script" id=8]
+[ext_resource path="res://enemies/RammerEnemy.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -48,5 +49,25 @@ curve = SubResource( 2 )
 script = ExtResource( 8 )
 
 [node name="EnemyFollow2" parent="EnemyPath2" instance=ExtResource( 7 )]
+
+[node name="RammerEnemy" parent="." instance=ExtResource( 9 )]
+position = Vector2( 48, 45 )
+state = "ai"
+
+[node name="RammerEnemy2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 189, 32 )
+state = "ai"
+
+[node name="RammerEnemy3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 279, 96 )
+state = "ai"
+
+[node name="RammerEnemy4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 139, 97 )
+state = "ai"
+
+[node name="RammerEnemy5" parent="." instance=ExtResource( 9 )]
+position = Vector2( 123, 41 )
+state = "ai"
 
 [connection signal="spawn_primary" from="Player" to="." method="_on_Player_spawn_primary"]

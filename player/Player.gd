@@ -7,11 +7,16 @@ onready var gun = $Gun
 var speed = 300
 var input_vector = Vector2.ZERO
 var armour = 1
+var xLimit = 320
 
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	
 	global_position += input_vector * speed * delta
+	if (global_position.x > xLimit):
+		global_position.x = xLimit
+	elif (global_position.x < 0):
+		global_position.x = 0
 	
 	if Input.is_action_just_pressed("primary_shoot"):
 		shoot_primary()

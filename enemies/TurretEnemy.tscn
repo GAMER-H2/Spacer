@@ -30,6 +30,12 @@ polygon = PoolVector2Array( -13, -17, 12, -17, 17, -12, 17, 12, 12, 17, -13, 17,
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 shape = SubResource( 1 )
 
+[node name="Gun1" type="Position2D" parent="."]
+position = Vector2( 7, -1 )
+
+[node name="Gun2" type="Position2D" parent="."]
+position = Vector2( -7, -1 )
+
 [connection signal="area_entered" from="." to="." method="_on_TurretEnemy_area_entered"]
 
 [editable path="SoftCollision"]

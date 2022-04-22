@@ -22,6 +22,10 @@ polygon = PoolVector2Array( -9, -14, 9, -14, 14, -7, 14, 0, 13, 14, 11, 16, 9, 1
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 shape = SubResource( 1 )
 
+[node name="Gun" type="Position2D" parent="."]
+position = Vector2( 0, 2 )
+
 [connection signal="area_entered" from="." to="." method="_on_BasicEnemy_area_entered"]
+[connection signal="spawn_enemy_laser" from="." to="." method="_on_BasicEnemy_spawn_enemy_laser"]
 
 [editable path="SoftCollision"]

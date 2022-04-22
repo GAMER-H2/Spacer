@@ -8,6 +8,7 @@ onready var pathfollow = get_parent()
 #onready var player := get_tree().get_root().get_node("DebugLevel").get_node_or_null("Player")
 onready var player := get_tree().get_current_scene().get_node_or_null("Player")
 onready var softCollision = $SoftCollision
+onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
 
 const defaultPos = Vector2(160,69)
 const wanderLimitX = 310
@@ -22,6 +23,12 @@ var rng = RandomNumberGenerator.new()
 
 func _ready( ):
 	rng.randomize()
+#	wanderLimitX = global_position.x + 30
+#	wanderLimitY = global_position.y + 30
+#	if (wanderLimitX > 320): wanderLimitX = 320
+#	if (wanderLimitY > 100): wanderLimitY = 100
+#	wanderMinX = wanderLimitX - 60
+#	wanderMinY = wanderLimitY - 60
 
 func _physics_process(delta):
 	player = get_tree().get_current_scene().get_node_or_null("Player")
@@ -34,6 +41,8 @@ func _physics_process(delta):
 	if (state == "ai"):
 		softCollision.get_node("CollisionShape2D").disabled = false
 		wander(delta)
+		if (rng.randi_range(1, 500) == 112 and player != null):
+				shoot()
 
 func goToCentre(delta):
 	var angle = get_angle_to(defaultPos)
@@ -54,8 +63,8 @@ func wander(delta):
 		wanderTo()
 
 func wanderTo():
-	var targetX = rng.randf_range((global_position.x - 50) - 20, (global_position.x + 50) + 20)
-	var targetY = rng.randf_range((global_position.y - 50) - 20, (global_position.y + 50) + 20)
+	var targetX = rng.randf_range((global_position.x - 30) - 5, (global_position.x + 30) - 10)
+	var targetY = rng.randf_range((global_position.y - 30) - 5, (global_position.y + 30) - 10)
 	if (targetX < wanderMin):
 		targetX = wanderMin
 	elif (targetX > wanderLimitX):
@@ -65,6 +74,18 @@ func wanderTo():
 	elif (targetY > wanderLimitY):
 		targetY = wanderLimitY
 	wanderPos = Vector2(targetX, targetY)
+
+func shoot():
+	var el1 = enemyLaser.instance()
+	var el2 = enemyLaser.instance()
+	el1.global_position = $Gun1.global_position
+	el2.global_position = $Gun2.global_position
+	el1.state = "aim"
+	el2.state = "aim"
+	var currentScene = get_tree().get_current_scene()
+	currentScene.add_child(el1)
+	currentScene.add_child(el2)
+	
 
 func take_damage(damage):
 	hp -= damage

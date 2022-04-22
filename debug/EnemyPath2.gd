@@ -4,7 +4,7 @@ var timer = 0
 var spawnTime = 2
 var enemy = preload("res://debug/EnemyFollow2.tscn")
 var enemyCount = 0
-const enemyLimit = 10
+const enemyLimit = 0
 
 func _process(delta):
 	timer = timer + delta

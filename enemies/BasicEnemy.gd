@@ -6,6 +6,8 @@ export (int) var speed = 75
 export (String, "path", "ai", "debug") var state = "path"
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
+signal spawn_enemy_laser(location)
+onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
 
 const defaultPos = Vector2(160,69)
 const wanderLimitX = 310
@@ -15,7 +17,7 @@ const wanderMin = 10
 var hp = 1
 var velocity = Vector2(0,0)
 var wanderPos = Vector2(160,69)
-var positioned = true
+var positioned = false
 var rng = RandomNumberGenerator.new()
 var stillCount = 0
 
@@ -24,6 +26,8 @@ func _ready( ):
 
 func _physics_process(delta):
 	#global_position.y += speed * delta
+	if (rng.randi_range(1, 1500) == 112):
+		shoot()
 	if (state == "path"):
 		softCollision.get_node("CollisionShape2D").disabled = true
 	elif (state == "ai"):
@@ -70,6 +74,9 @@ func wanderTo():
 		targetY = wanderLimitY
 	wanderPos = Vector2(targetX, targetY)
 
+func shoot():
+	emit_signal("spawn_enemy_laser", $Gun.global_position)
+
 func take_damage(damage):
 	hp -= damage
 	if hp <= 0:
@@ -79,3 +86,9 @@ func take_damage(damage):
 func _on_BasicEnemy_area_entered(area):
 	if area is Player:
 		area.take_damage(1)
+
+func _on_BasicEnemy_spawn_enemy_laser(location):
+	var el = enemyLaser.instance()
+	el.global_position = location
+	el.state = "down"
+	get_tree().get_current_scene().add_child(el)
