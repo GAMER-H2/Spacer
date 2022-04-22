@@ -11,6 +11,8 @@ func _ready():
 		var angle = get_angle_to(player.global_position)
 		velocity.x = cos(angle)
 		velocity.y = sin(angle)
+	else:
+		queue_free()
 
 func _physics_process(delta):
 	if (state == "down"):

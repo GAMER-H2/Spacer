@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://debug/DebugQuit.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -8,7 +8,9 @@
 [ext_resource path="res://debug/DebugLevel.gd" type="Script" id=6]
 [ext_resource path="res://debug/EnemyFollow2.tscn" type="PackedScene" id=7]
 [ext_resource path="res://debug/EnemyPath2.gd" type="Script" id=8]
-[ext_resource path="res://enemies/RammerEnemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://enemies/AdvanceEnemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://enemies/UfoEnemy.tscn" type="PackedScene" id=10]
+[ext_resource path="res://enemies/RammerEnemy.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -50,24 +52,35 @@ script = ExtResource( 8 )
 
 [node name="EnemyFollow2" parent="EnemyPath2" instance=ExtResource( 7 )]
 
-[node name="RammerEnemy" parent="." instance=ExtResource( 9 )]
-position = Vector2( 48, 45 )
+[node name="AdvanceEnemy" parent="." instance=ExtResource( 9 )]
+position = Vector2( 55, 56 )
 state = "ai"
 
-[node name="RammerEnemy2" parent="." instance=ExtResource( 9 )]
-position = Vector2( 189, 32 )
+[node name="AdvanceEnemy2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 161, 51 )
 state = "ai"
 
-[node name="RammerEnemy3" parent="." instance=ExtResource( 9 )]
-position = Vector2( 279, 96 )
+[node name="AdvanceEnemy3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 266, 54 )
 state = "ai"
 
-[node name="RammerEnemy4" parent="." instance=ExtResource( 9 )]
-position = Vector2( 139, 97 )
+[node name="UfoEnemy" parent="." instance=ExtResource( 10 )]
+position = Vector2( 342, 12 )
+
+[node name="RammerEnemy" parent="." instance=ExtResource( 11 )]
+position = Vector2( 45, 123 )
 state = "ai"
 
-[node name="RammerEnemy5" parent="." instance=ExtResource( 9 )]
-position = Vector2( 123, 41 )
+[node name="RammerEnemy2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 101, 120 )
+state = "ai"
+
+[node name="RammerEnemy3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 168, 119 )
+state = "ai"
+
+[node name="RammerEnemy4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 248, 118 )
 state = "ai"
 
 [connection signal="spawn_primary" from="Player" to="." method="_on_Player_spawn_primary"]

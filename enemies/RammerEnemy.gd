@@ -78,7 +78,7 @@ func wander(delta):
 
 func wanderTo():
 	var targetX = rng.randf_range((global_position.x - 50) - 20, (global_position.x + 50) - 20)
-	var targetY = rng.randf_range((global_position.y - 50) - 20, (global_position.y + 50) - 20)
+	var targetY = rng.randf_range((global_position.y - 50) - 20, (global_position.y + 50) + 20)
 	if (targetX < wanderMin):
 		targetX = wanderMin
 	elif (targetX > wanderLimitX):
