@@ -4,22 +4,32 @@ signal dead
 
 export (int) var speed = 25
 export (String, "path", "ai", "debug") var state = "path"
+export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 #onready var player := get_tree().get_root().get_node("DebugLevel").get_node_or_null("Player")
 onready var player := get_tree().get_current_scene().get_node_or_null("Player")
 onready var softCollision = $SoftCollision
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
+onready var baseSprite1 = preload("res://assets/enemies/sprite_turret_enemy0.png")
+onready var baseSprite2 = preload("res://assets/enemies/sprite_turret_enemy1.png")
+onready var baseSprite3 = preload("res://assets/enemies/sprite_turret_enemy2.png")
+onready var baseSprite4 = preload("res://assets/enemies/sprite_turret_enemy3.png")
+onready var gunSprite1 = preload("res://assets/enemies/sprite_turret_enemy4.png")
+onready var gunSprite2 = preload("res://assets/enemies/sprite_turret_enemy5.png")
+onready var gunSprite3 = preload("res://assets/enemies/sprite_turret_enemy6.png")
+onready var gunSprite4 = preload("res://assets/enemies/sprite_turret_enemy7.png")
 
 const defaultPos = Vector2(160,69)
 const wanderLimitX = 310
 const wanderLimitY = 100
 const wanderMin = 10
 
-var hp = 2
+var hp = 4
 var velocity = Vector2(0,0)
 var wanderPos = Vector2(160,69)
 var positioned = false
 var rng = RandomNumberGenerator.new()
+var shootChance = 500
 
 func _ready( ):
 	rng.randomize()
@@ -29,6 +39,30 @@ func _ready( ):
 #	if (wanderLimitY > 100): wanderLimitY = 100
 #	wanderMinX = wanderLimitX - 60
 #	wanderMinY = wanderLimitY - 60
+	if (tier == 1):
+		hp = 4
+		speed = 25
+		shootChance = 500
+		$Sprite.set_texture(baseSprite1)
+		$GunSprite.set_texture(gunSprite1)
+	elif (tier == 2):
+		hp = 6
+		speed = 25
+		shootChance = 400
+		$Sprite.set_texture(baseSprite2)
+		$GunSprite.set_texture(gunSprite2)
+	elif (tier == 3):
+		hp = 8
+		speed = 25
+		shootChance = 300
+		$Sprite.set_texture(baseSprite3)
+		$GunSprite.set_texture(gunSprite3)
+	elif (tier == 4):
+		hp = 10
+		speed = 50
+		shootChance = 200
+		$Sprite.set_texture(baseSprite4)
+		$GunSprite.set_texture(gunSprite4)
 
 func _physics_process(delta):
 	player = get_tree().get_current_scene().get_node_or_null("Player")
@@ -41,7 +75,7 @@ func _physics_process(delta):
 	if (state == "ai"):
 		softCollision.get_node("CollisionShape2D").disabled = false
 		wander(delta)
-		if (rng.randi_range(1, 500) == 112 and player != null):
+		if (rng.randi_range(1, shootChance) == 1 and player != null):
 				shoot()
 
 func goToCentre(delta):
@@ -63,8 +97,8 @@ func wander(delta):
 		wanderTo()
 
 func wanderTo():
-	var targetX = rng.randf_range((global_position.x - 20) - 5, (global_position.x + 20) - 10)
-	var targetY = rng.randf_range((global_position.y - 20) - 5, (global_position.y + 20) - 10)
+	var targetX = rng.randf_range((global_position.x - 20) - 5, (global_position.x + 20) + 5)
+	var targetY = rng.randf_range((global_position.y - 20) - 5, (global_position.y + 20) + 5)
 	if (targetX < wanderMin):
 		targetX = wanderMin
 	elif (targetX > wanderLimitX):

@@ -4,28 +4,54 @@ signal dead
 
 export (int) var speed = 75
 export (String, "path", "ai", "debug") var state = "path"
+export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
+onready var sprite1 = preload("res://assets/enemies/sprite_advances0.png")
+onready var sprite2 = preload("res://assets/enemies/sprite_advances1.png")
+onready var sprite3 = preload("res://assets/enemies/sprite_advances2.png")
+onready var sprite4 = preload("res://assets/enemies/sprite_advances3.png")
 
 const defaultPos = Vector2(160,69)
 const wanderLimitX = 310
 const wanderLimitY = 100
 const wanderMin = 10
 
-var hp = 3
+var hp = 4
 var velocity = Vector2(0,0)
 var wanderPos = Vector2(160,69)
 var positioned = false
 var rng = RandomNumberGenerator.new()
 var stillCount = 0
+var shootChance = 1000
 
 func _ready( ):
 	rng.randomize()
+	if (tier == 1):
+		hp = 4
+		speed = 75
+		shootChance = 1000
+		$Sprite.set_texture(sprite1)
+	elif (tier == 2):
+		hp = 7
+		speed = 100
+		shootChance = 900
+		$Sprite.set_texture(sprite2)
+	elif (tier == 3):
+		hp = 10
+		speed = 100
+		shootChance = 800
+		$Sprite.set_texture(sprite3)
+	elif (tier == 4):
+		hp = 13
+		speed = 125
+		shootChance = 700
+		$Sprite.set_texture(sprite4)
 
 func _physics_process(delta):
 	#global_position.y += speed * delta
-	if (rng.randi_range(1, 1000) == 112):
+	if (rng.randi_range(1, shootChance) == 1):
 		shoot()
 	if (state == "path"):
 		softCollision.get_node("CollisionShape2D").disabled = true
@@ -61,7 +87,7 @@ func wander(delta):
 		wanderTo()
 
 func wanderTo():
-	var targetX = rng.randf_range((global_position.x - 70) - 30, (global_position.x + 70) - 35)
+	var targetX = rng.randf_range((global_position.x - 70) - 30, (global_position.x + 70) + 30)
 	var targetY = rng.randf_range((global_position.y - 70) - 30, (global_position.y + 70) + 30)
 	if (targetX < wanderMin):
 		targetX = wanderMin

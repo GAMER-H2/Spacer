@@ -1,7 +1,7 @@
 extends Area2D
 class_name Player
 
-signal spawn_primary(location)
+#signal spawn_primary(location)
 
 onready var gun = $Gun
 var speed = 300

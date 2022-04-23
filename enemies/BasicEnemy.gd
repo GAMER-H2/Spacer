@@ -4,29 +4,57 @@ signal dead
 
 export (int) var speed = 75
 export (String, "path", "ai", "debug") var state = "path"
+export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 signal spawn_enemy_laser(location)
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
+onready var sprite1 = preload("res://assets/enemies/sprite_basic_enemy0.png")
+onready var sprite2 = preload("res://assets/enemies/sprite_basic_enemy1.png")
+onready var sprite3 = preload("res://assets/enemies/sprite_basic_enemy2.png")
+onready var sprite4 = preload("res://assets/enemies/sprite_basic_enemy3.png")
 
 const defaultPos = Vector2(160,69)
 const wanderLimitX = 310
 const wanderLimitY = 100
 const wanderMin = 10
 
-var hp = 1
+var hp = 2
 var velocity = Vector2(0,0)
 var wanderPos = Vector2(160,69)
 var positioned = false
 var rng = RandomNumberGenerator.new()
 var stillCount = 0
+var shootChance = 1500
+
+#var DEBUG_SWITCH = false
 
 func _ready( ):
 	rng.randomize()
+	if (tier == 1):
+		hp = 2
+		speed = 75
+		shootChance = 1500
+		$Sprite.set_texture(sprite1)
+	elif (tier == 2):
+		hp = 3
+		speed = 75
+		shootChance = 1250
+		$Sprite.set_texture(sprite2)
+	elif (tier == 3):
+		hp = 4
+		speed = 75
+		shootChance = 1000
+		$Sprite.set_texture(sprite3)
+	elif (tier == 4):
+		hp = 5
+		speed = 100
+		shootChance = 750
+		$Sprite.set_texture(sprite4)
 
 func _physics_process(delta):
 	#global_position.y += speed * delta
-	if (rng.randi_range(1, 1500) == 112):
+	if (rng.randi_range(1, shootChance) == 1):
 		shoot()
 	if (state == "path"):
 		softCollision.get_node("CollisionShape2D").disabled = true
@@ -62,8 +90,15 @@ func wander(delta):
 		wanderTo()
 
 func wanderTo():
-	var targetX = rng.randf_range((global_position.x - 50) - 20, (global_position.x + 50) + 20)
-	var targetY = rng.randf_range((global_position.y - 50) - 20, (global_position.y + 50) + 20)
+	var minX = (global_position.x - 50) - 20
+	var maxX = (global_position.x + 50) + 20
+	var minY = (global_position.y - 50) - 20
+	var maxY = (global_position.y + 50) + 20
+	var targetX = rng.randi_range(minX, maxX)
+	var targetY = rng.randi_range(minY, maxY)
+#	if (!DEBUG_SWITCH):
+#		print(str(targetX) + " " + str(targetY))
+#		DEBUG_SWITCH = true
 	if (targetX < wanderMin):
 		targetX = wanderMin
 	elif (targetX > wanderLimitX):

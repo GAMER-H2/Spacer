@@ -4,8 +4,13 @@ signal dead
 
 export (int) var speed = 150
 export (String, "path", "ai", "dive", "debug") var state = "path"
+export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
+onready var sprite1 = preload("res://assets/enemies/rammer_enemy0.png")
+onready var sprite2 = preload("res://assets/enemies/rammer_enemy1.png")
+onready var sprite3 = preload("res://assets/enemies/rammer_enemy2.png")
+onready var sprite4 = preload("res://assets/enemies/rammer_enemy3.png")
 
 const defaultPos = Vector2(160,69)
 const wanderLimitX = 310
@@ -21,18 +26,39 @@ var stillCount = 0
 var timer = 0
 var diveTime = 2
 var diveAngle = null
+var diveChance = 1000
 
 func _ready( ):
 	rng.randomize()
+	if (tier == 1):
+		hp = 1
+		speed = 150
+		diveChance = 1000
+		$Sprite.set_texture(sprite1)
+	elif (tier == 2):
+		hp = 2
+		speed = 150
+		diveChance = 750
+		$Sprite.set_texture(sprite2)
+	elif (tier == 3):
+		hp = 3
+		speed = 200
+		diveChance = 750
+		$Sprite.set_texture(sprite3)
+	elif (tier == 4):
+		hp = 4
+		speed = 250
+		diveChance = 500
+		$Sprite.set_texture(sprite4)
 
 func _physics_process(delta):
 	#global_position.y += speed * delta
-	if (rng.randi_range(1, 1000) == 112):
-		state = "dive"
 	if (state == "path"):
 		softCollision.get_node("CollisionShape2D").disabled = true
 	elif (state == "ai"):
 		softCollision.get_node("CollisionShape2D").disabled = false
+		if (rng.randi_range(1, diveChance) == 1):
+			state = "dive"
 		var angle = (get_angle_to(wanderPos))
 		if (!positioned):
 			goToCentre(delta)
@@ -77,7 +103,7 @@ func wander(delta):
 		wanderTo()
 
 func wanderTo():
-	var targetX = rng.randf_range((global_position.x - 50) - 20, (global_position.x + 50) - 20)
+	var targetX = rng.randf_range((global_position.x - 50) - 20, (global_position.x + 50) + 20)
 	var targetY = rng.randf_range((global_position.y - 50) - 20, (global_position.y + 50) + 20)
 	if (targetX < wanderMin):
 		targetX = wanderMin

@@ -11,6 +11,8 @@ func _process(delta):
 	
 	if (timer > spawnTime and enemyCount < enemyLimit):
 		var newEnemy = enemy.instance()
+		newEnemy.enemyType = "basic"
+		newEnemy.tier = 1
 		add_child(newEnemy)
 		timer = 0
 		enemyCount += 1
