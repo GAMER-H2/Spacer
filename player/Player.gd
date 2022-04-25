@@ -8,9 +8,14 @@ var speed = 300
 var input_vector = Vector2.ZERO
 var armour = 1
 var xLimit = 320
-var laserTimer = 0
-const laserInterval = 1
-var primaryLaser = preload("res://player/projectiles/PlayerPrimary.tscn")
+var laserTimer = 0.5
+const laserInterval = 0.5
+onready var primaryLaser = [preload("res://player/projectiles/PlayerPrimary.tscn"), preload("res://player/projectiles/DoubleLaser.tscn"), preload("res://player/projectiles/TripleLaser.tscn")]
+var primaryLaserIndex = 2
+var primaryFireRate = 300
+#var secondaries = preload("")
+var secondaryIndex = 0
+var secondaryFireRate = 200
 
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -29,6 +34,12 @@ func take_damage(damage):
 	if armour <= 0:
 		queue_free()
 
+func change_laser(laserNum):
+	primaryLaserIndex = laserNum
+
+func change_secondary(secondaryNum):
+	secondaryIndex = secondaryNum
+
 func _on_Player_area_entered(area):
 	if area.is_in_group("enemies"):
 		area.take_damage(1)
@@ -36,6 +47,11 @@ func _on_Player_area_entered(area):
 func shoot_primary():
 	#emit_signal("spawn_primary", gun.global_position)
 	if (laserTimer >= laserInterval):
-		var l = primaryLaser.instance()
-		l.global_position = gun.global_position
-		get_tree().get_current_scene().add_child(l)
+		laserTimer = 0
+		var l = primaryLaser[primaryLaserIndex].instance()
+		addLaserToScene(l)
+
+func addLaserToScene(child):
+	child.speed = primaryFireRate
+	child.global_position = gun.global_position
+	get_tree().get_current_scene().add_child(child)
