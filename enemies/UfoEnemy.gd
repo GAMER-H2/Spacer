@@ -80,6 +80,19 @@ func take_damage(damage):
 		emit_signal("dead")
 		queue_free()
 
+func freeze():
+	set_physics_process(false)
+	var t = Timer.new()
+	t.set_wait_time(3)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	set_physics_process(true)
+
+func turn():
+	pass
+
 func _on_UfoEnemy_area_entered(area):
 	if area is Player:
 		area.take_damage(1)

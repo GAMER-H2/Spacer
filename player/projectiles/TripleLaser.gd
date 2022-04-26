@@ -12,9 +12,6 @@ var noMore = false
 onready var bolt1 = $Bolt1
 onready var bolt2 = $Bolt2
 onready var bolt3 = $Bolt3
-var bolt1Hit = false
-var bolt2Hit = false
-var bolt3Hit = false
 
 func _ready():
 	velocity1.x = cos(angle1)
@@ -28,40 +25,44 @@ func _ready():
 	bolt3.rotate(angle3-deg2rad(90))
 
 func _physics_process(delta):
-	if (bolt1Hit):
-		bolt1.remove_child($Bolt1/Sprite)
-		bolt1.remove_child($Bolt1/CollisionShape2D)
-		bolt1Hit = false
-	elif (bolt1 != null):
+	if (bolt1.get_child_count() != 0):
 		bolt1.global_position += velocity1 * -speed * delta
-	if (bolt2Hit):
-		bolt2.remove_child($Bolt2/Sprite)
-		bolt2.remove_child($Bolt2/CollisionShape2D)
-		bolt2Hit = false
-	elif (bolt2 != null):
+		if (bolt1.global_position.x < 0 or bolt1.global_position.x > 320 or bolt1.global_position.y < 0 or bolt1.global_position.y > 240):
+			removeBolt1()
+	if (bolt2.get_child_count() != 0):
 		bolt2.global_position += velocity2 * -speed * delta
-	if (bolt3Hit):
-		bolt3.remove_child($Bolt3/Sprite)
-		bolt3.remove_child($Bolt3/CollisionShape2D)
-		bolt3Hit = false
-	elif (bolt3 != null):
+		if (bolt2.global_position.x < 0 or bolt2.global_position.x > 320 or bolt2.global_position.y < 0 or bolt2.global_position.y > 240):
+			removeBolt2()
+	if (bolt3.get_child_count() != 0):
 		bolt3.global_position += velocity3 * -speed * delta
-	if (global_position.x < 0 or global_position.x > 320 or global_position.y < 0 or global_position.y > 240 and (bolt1 == null and bolt2 == null and bolt3 == null)):
+		if (bolt3.global_position.x < 0 or bolt3.global_position.x > 320 or bolt3.global_position.y < 0 or bolt3.global_position.y > 240):
+			removeBolt3()
+	if (bolt1.get_child_count() == 0 and bolt2.get_child_count() == 0 and bolt3.get_child_count() == 0):
 		queue_free()
+
+func removeBolt1():
+	bolt1.remove_child($Bolt1/Sprite)
+	bolt1.remove_child($Bolt1/CollisionShape2D)
+
+func removeBolt2():
+	bolt2.remove_child($Bolt2/Sprite)
+	bolt2.remove_child($Bolt2/CollisionShape2D)
+
+func removeBolt3():
+	bolt3.remove_child($Bolt3/Sprite)
+	bolt3.remove_child($Bolt3/CollisionShape2D)
 
 func _on_Bolt1_area_entered(area):
 	if area.is_in_group("enemies"):
 		area.take_damage(damage)
-		bolt1Hit = true
-
+		removeBolt1()
 
 func _on_Bolt2_area_entered(area):
 	if area.is_in_group("enemies"):
 		area.take_damage(damage)
-		bolt2Hit = true
-
+		removeBolt2()
 
 func _on_Bolt3_area_entered(area):
 	if area.is_in_group("enemies"):
 		area.take_damage(damage)
-		bolt3Hit = true
+		removeBolt3()

@@ -1,0 +1,36 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/explosion/sprite_explosion2.png" type="Texture" id=1]
+[ext_resource path="res://assets/explosion/sprite_explosion5.png" type="Texture" id=2]
+[ext_resource path="res://assets/explosion/sprite_explosion7.png" type="Texture" id=3]
+[ext_resource path="res://assets/explosion/sprite_explosion0.png" type="Texture" id=4]
+[ext_resource path="res://assets/explosion/sprite_explosion6.png" type="Texture" id=5]
+[ext_resource path="res://assets/explosion/sprite_explosion4.png" type="Texture" id=6]
+[ext_resource path="res://assets/explosion/sprite_explosion1.png" type="Texture" id=7]
+[ext_resource path="res://assets/explosion/sprite_explosion3.png" type="Texture" id=8]
+[ext_resource path="res://assets/explosion/sprite_explosion8.png" type="Texture" id=9]
+[ext_resource path="res://physics/Explosion.gd" type="Script" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 9 ) ],
+"loop": false,
+"name": "default",
+"speed": 24.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 14.1421
+
+[node name="Explosion" type="Area2D"]
+script = ExtResource( 10 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+modulate = Color( 0.298039, 0.27451, 1, 1 )
+frames = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 2 )
+
+[connection signal="area_entered" from="." to="." method="_on_FrozenExplosion_area_entered"]

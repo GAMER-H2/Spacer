@@ -8,6 +8,7 @@ export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
+onready var explosionLoad = preload("res://physics/Explosion.tscn")
 onready var sprite1 = preload("res://assets/enemies/sprite_advances0.png")
 onready var sprite2 = preload("res://assets/enemies/sprite_advances1.png")
 onready var sprite3 = preload("res://assets/enemies/sprite_advances2.png")
@@ -25,6 +26,7 @@ var positioned = false
 var rng = RandomNumberGenerator.new()
 var stillCount = 0
 var shootChance = 1000
+var controlled = false
 
 func _ready( ):
 	rng.randomize()
@@ -69,11 +71,17 @@ func _physics_process(delta):
 				positioned = false
 
 func goToCentre(delta):
-	var angle = get_angle_to(defaultPos)
+	var centre = defaultPos
+	if (controlled):
+		centre = findClosestEnemy().global_position
+		if (softCollision.is_colliding()):
+			spawnExplosion()
+			controlled = false
+	var angle = get_angle_to(centre)
 	velocity.x = cos(angle)
 	velocity.y = sin(angle)
-	global_position += velocity * min(speed * delta, (defaultPos - global_position).length())
-	if (angle == get_angle_to(defaultPos)):
+	global_position += velocity * min(speed * delta, (centre - global_position).length())
+	if (angle == get_angle_to(centre)):
 		positioned = true
 
 func wander(delta):
@@ -115,6 +123,38 @@ func take_damage(damage):
 	if hp <= 0:
 		emit_signal("dead")
 		queue_free()
+
+func freeze():
+	set_physics_process(false)
+	var t = Timer.new()
+	t.set_wait_time(3)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	set_physics_process(true)
+
+func turn():
+	controlled = true
+	positioned = false
+
+func spawnExplosion():
+	var explosion = explosionLoad.instance()
+	explosion.global_position = global_position
+	explosion.scale = Vector2(1.5,1.5)
+	get_tree().get_current_scene().call_deferred("add_child", explosion)
+
+func findClosestEnemy():
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	var closestEnemy
+	if (enemies[0] != self):
+		closestEnemy = enemies[0]
+	else:
+		closestEnemy = enemies[1]
+	for enemy in enemies:
+		if (enemy.global_position.distance_to(global_position) < closestEnemy.global_position.distance_to(global_position) and enemy != self):
+			closestEnemy = enemy
+	return closestEnemy
 
 func _on_AdvanceEnemy_area_entered(area):
 	if area is Player:

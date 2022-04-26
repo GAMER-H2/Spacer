@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://enemies/BasicEnemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://debug/EnemyPath.gd" type="Script" id=3]
 [ext_resource path="res://assets/background_1.png" type="Texture" id=5]
@@ -19,13 +18,7 @@ centered = false
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 161, 219 )
 
-[node name="BasicEnemy" parent="." instance=ExtResource( 1 )]
-position = Vector2( 170, 42 )
-state = "ai"
-tier = 2
-
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource( 1 )
 script = ExtResource( 3 )
-enemyType = "advancer"
-tier = 3
+tier = 2

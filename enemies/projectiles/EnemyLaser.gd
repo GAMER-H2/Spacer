@@ -2,11 +2,11 @@ extends Area2D
 
 export (String, "down", "aim", "debug") var state = "down"
 var velocity = Vector2(0,0)
+onready var player = get_tree().get_current_scene().get_node_or_null("Player")
 
 var speed = 100
 
 func _ready():
-	var player = get_tree().get_current_scene().get_node_or_null("Player")
 	if (player != null):
 		var angle = get_angle_to(player.global_position)
 		velocity.x = cos(angle)
