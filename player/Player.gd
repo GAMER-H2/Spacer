@@ -12,12 +12,12 @@ preload("res://player/projectiles/SuperTriple.tscn"),
 preload("res://player/projectiles/EnergyBall.tscn"),
 preload("res://player/projectiles/AtomicRay.tscn")]
 var laserTimer = 0.5
-const laserInterval = 0.5
-var primaryLaserIndex = 5
+var laserInterval = 0.5
+var primaryLaserIndex = 1
 var primaryFireRate = 0
 var primaryLaserInstance
 
-var secondaries = [preload("res://player/projectiles/DefaultMissile.tscn"),
+onready var secondaries = [preload("res://player/projectiles/DefaultMissile.tscn"),
 preload("res://player/projectiles/SuperMissile.tscn"),
 preload("res://player/projectiles/FireworkMissile.tscn"),
 preload("res://player/projectiles/FrozenMissile.tscn"),
@@ -26,7 +26,7 @@ preload("res://player/projectiles/Mines.tscn"),
 preload("res://player/projectiles/AutoAimMissile.tscn"),
 preload("res://player/projectiles/GenerateTurret.tscn")]
 var missileTimer = 1
-var missileInterval = 1
+const missileInterval = 1
 var secondaryIndex = 7
 var secondaryFireRate = 0
 var secondaryMissileInstance
@@ -34,12 +34,16 @@ var ammo = 15
 var turretNum = 0
 
 onready var gun = $Gun
-var speed = 300
+var speed = 200
 var input_vector = Vector2.ZERO
 var armour = 1
 var xLimit = 320
 onready var TurretPos1 = $TurretSpawn1.global_position
 onready var TurretPos2 = $TurretSpawn2.global_position
+
+func _ready():
+	loading()
+	ammo += 5
 
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -57,7 +61,7 @@ func _physics_process(delta):
 		shoot_primary()
 	if (Input.is_action_just_released("primary_shoot") and primaryLaserIndex == 7):
 		remove_atomic_ray()
-	if (Input.is_action_just_pressed("secondary_shoot")):
+	if (Input.is_action_just_pressed("secondary_shoot") and ammo > 0):
 		if (secondaryIndex != 7):
 			shoot_secondary()
 		else:
@@ -96,6 +100,7 @@ func shoot_secondary():
 		missileTimer = 0
 		secondaryMissileInstance = secondaries[secondaryIndex].instance()
 		addLaserToScene(secondaryMissileInstance, secondaryFireRate, gun.global_position)
+		ammo -= 1
 
 func addLaserToScene(instance, fireRate, pos):
 	instance.speed += fireRate
@@ -115,7 +120,26 @@ func generate_turret():
 			turret.global_position = $TurretSpawn1.global_position
 			turret.name = "PlayerTurret1"
 		elif (turretNum == 1):
-			turret.global_position = $TurretSpawn2.global_position
-			turret.name = "PlayerTurret2"
+			if (get_tree().get_current_scene().get_node_or_null("PlayerTurret2") == null):
+				turret.global_position = $TurretSpawn2.global_position
+				turret.name = "PlayerTurret2"
+			else:
+				turret.global_position = $TurretSpawn1.global_position
+				turret.name = "PlayerTurret1"
 		get_tree().get_current_scene().add_child(turret)
 		turretNum += 1
+
+func saving():
+	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, global_position)
+
+func loading():
+	var loadedValues = SaveSystem.loadValues()
+	laserInterval = loadedValues[0]
+	laserTimer = loadedValues[0]
+	primaryLaserIndex = loadedValues[1]
+	primaryFireRate = loadedValues[2]
+	secondaryIndex = loadedValues[3]
+	ammo = loadedValues[4]
+	speed = loadedValues[5]
+	armour = loadedValues[6]
+	global_position = loadedValues[7]

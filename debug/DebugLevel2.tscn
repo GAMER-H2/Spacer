@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://assets/backgrounds/background_1.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://debug/EnemyPath.gd" type="Script" id=3]
-[ext_resource path="res://assets/background_1.png" type="Texture" id=5]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -12,7 +12,7 @@ _data = {
 [node name="DebugLevel2" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 5 )
+texture = ExtResource( 1 )
 centered = false
 
 [node name="Player" parent="." instance=ExtResource( 2 )]

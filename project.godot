@@ -24,6 +24,10 @@ config/name="Spacer"
 run/main_scene="res://debug/DebugLevel2.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SaveSystem="*res://save/SaveSystem.gd"
+
 [display]
 
 window/size/width=320
