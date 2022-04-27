@@ -20,6 +20,7 @@ func _ready():
 	elif (enemyType == "advancer"):
 		enemy = advanceEnemy.instance()
 	enemy.tier = tier
+	enemy.name = "enemy"
 	add_child(enemy)
 
 func _process(delta):
@@ -28,3 +29,6 @@ func _process(delta):
 	if (get_child_count() != 0 and get_unit_offset() == 1 and !jobDone):
 		get_child(0).state = "ai"
 		jobDone = true
+	
+	if (get_node_or_null("enemy") == null):
+		queue_free()

@@ -40,6 +40,8 @@ var armour = 1
 var xLimit = 320
 onready var TurretPos1 = $TurretSpawn1.global_position
 onready var TurretPos2 = $TurretSpawn2.global_position
+var score = 0
+var money = 0
 
 func _ready():
 	loading()
@@ -56,6 +58,12 @@ func _physics_process(delta):
 		global_position.x = xLimit
 	elif (global_position.x < 0):
 		global_position.x = 0
+	
+	if (SaveSystem.currentScore < score):
+		score += turretNum
+	SaveSystem.currentScore = score
+	SaveSystem.currentAmmo = ammo
+	SaveSystem.currentAmrour = armour
 	
 	if Input.is_action_just_pressed("primary_shoot"):
 		shoot_primary()
@@ -130,7 +138,7 @@ func generate_turret():
 		turretNum += 1
 
 func saving():
-	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, global_position)
+	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, global_position, score, money)
 
 func loading():
 	var loadedValues = SaveSystem.loadValues()
@@ -143,3 +151,5 @@ func loading():
 	speed = loadedValues[5]
 	armour = loadedValues[6]
 	global_position = loadedValues[7]
+	score = loadedValues[8]
+	money = loadedValues[9]

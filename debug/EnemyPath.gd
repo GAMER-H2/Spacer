@@ -1,10 +1,10 @@
 extends Path2D
 
-var timer = 0
+var timer = -2
 var spawnTime = 0.5
 var enemy = preload("res://debug/EnemyFollow.tscn")
 var enemyCount = 0
-const enemyLimit = 2
+export (int) var enemyLimit = 2
 export (String, "basic", "turret", "rammer", "advancer") var enemyType = "basic"
 export (int, 1, 4) var tier = 1
 
@@ -17,4 +17,8 @@ func _process(delta):
 		newEnemy.tier = tier
 		add_child(newEnemy)
 		timer = 0
+		enemyCount += 1
+	
+	if (enemyCount == enemyLimit):
+		get_parent().spawningFinished = true
 		enemyCount += 1

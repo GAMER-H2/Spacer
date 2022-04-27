@@ -1,7 +1,5 @@
 extends Area2D
 
-signal dead
-
 export (int) var speed = 75
 export (String, "path", "ai", "debug") var state = "path"
 export (int, 1, 4) var tier = 1
@@ -23,7 +21,7 @@ const wanderMin = 10
 var hp = 2
 var velocity = Vector2(0,0)
 var wanderPos = Vector2(160,69)
-var positioned = false
+var positioned = true
 var rng = RandomNumberGenerator.new()
 var stillCount = 0
 var shootChance = 1500
@@ -124,7 +122,9 @@ func shoot():
 func take_damage(damage):
 	hp -= damage
 	if hp <= 0:
-		emit_signal("dead")
+		var player = get_tree().get_current_scene().get_node_or_null("Player")
+		if (player != null):
+			player.score += 1
 		queue_free()
 
 func freeze():

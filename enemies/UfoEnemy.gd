@@ -1,7 +1,5 @@
 extends Area2D
 
-signal dead
-
 export (int) var speed = 50
 export (String, "left", "right", "debug") var state = "left"
 export (int, 1, 4) var tier = 1
@@ -77,7 +75,9 @@ func shoot():
 func take_damage(damage):
 	hp -= damage
 	if hp <= 0:
-		emit_signal("dead")
+		var player = get_tree().get_current_scene().get_node_or_null("Player")
+		if (player != null):
+			player.score += 5
 		queue_free()
 
 func freeze():

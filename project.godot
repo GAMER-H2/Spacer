@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Spacer"
-run/main_scene="res://debug/DebugLevel2.tscn"
+run/main_scene="res://levels/Level1_1.tscn"
 config/icon="res://icon.png"
 
 [autoload]
