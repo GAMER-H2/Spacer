@@ -16,4 +16,10 @@ polygon = PoolVector2Array( 16, -2, 16, 11, 9, 14, 2, 16, -2, 16, -9, 14, -16, 1
 [node name="Gun" type="Position2D" parent="."]
 position = Vector2( 0, -9 )
 
+[node name="TurretSpawn1" type="Position2D" parent="."]
+position = Vector2( 27, 3 )
+
+[node name="TurretSpawn2" type="Position2D" parent="."]
+position = Vector2( -27, 3 )
+
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]

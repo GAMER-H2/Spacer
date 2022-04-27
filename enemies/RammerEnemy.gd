@@ -8,6 +8,7 @@ export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 onready var explosionLoad = preload("res://physics/Explosion.tscn")
+onready var turret = preload("res://player/projectiles/GenerateTurret.tscn")
 onready var sprite1 = preload("res://assets/enemies/rammer_enemy0.png")
 onready var sprite2 = preload("res://assets/enemies/rammer_enemy1.png")
 onready var sprite3 = preload("res://assets/enemies/rammer_enemy2.png")
@@ -88,8 +89,9 @@ func _physics_process(delta):
 
 func goToCentre(delta):
 	var centre = defaultPos
-	if (controlled):
-		centre = findClosestEnemy().global_position
+	var enemyCheck = findClosestEnemy()
+	if (controlled and enemyCheck != null):
+		centre = enemyCheck.global_position
 		if (softCollision.is_colliding()):
 			spawnExplosion()
 			controlled = false
@@ -151,16 +153,17 @@ func spawnExplosion():
 
 func findClosestEnemy():
 	var enemies = get_tree().get_nodes_in_group("enemies")
-	var closestEnemy
-	if (enemies[0] != self):
-		closestEnemy = enemies[0]
-	else:
-		closestEnemy = enemies[1]
-	for enemy in enemies:
-		if (enemy.global_position.distance_to(global_position) < closestEnemy.global_position.distance_to(global_position) and enemy != self):
-			closestEnemy = enemy
+	var closestEnemy = null
+	if (enemies.size() > 1):
+		if (enemies[0] != self):
+			closestEnemy = enemies[0]
+		else:
+			closestEnemy = enemies[1]
+		for enemy in enemies:
+			if (enemy.global_position.distance_to(global_position) < closestEnemy.global_position.distance_to(global_position) and enemy != self):
+				closestEnemy = enemy
 	return closestEnemy
 
 func _on_RammerEnemy_area_entered(area):
-	if area is Player:
+	if (area is Player or area is turret):
 		area.take_damage(1)
