@@ -10,6 +10,8 @@ func _ready():
 func _process(_delta):
 	if (spawningFinished and noEnemies()):
 		nextLevel()
+	if (Input.is_action_just_pressed("pause")):
+		$PauseMenu.visible = true
 
 func noEnemies():
 	var children = $EnemyPath1.get_children() + $EnemyPath2.get_children()
@@ -38,4 +40,5 @@ func nextLevel():
 	var player = get_node_or_null("Player")
 	if (player != null):
 		player.saving()
-	get_tree().change_scene("res://debug/DebugLevel2.tscn")
+	if (get_tree().change_scene("res://debug/DebugLevel2.tscn") != OK):
+			print("Error: Cannot change scenes")

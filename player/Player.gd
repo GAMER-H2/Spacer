@@ -65,7 +65,7 @@ func _physics_process(delta):
 	SaveSystem.currentAmmo = ammo
 	SaveSystem.currentAmrour = armour
 	
-	if Input.is_action_just_pressed("primary_shoot"):
+	if (Input.is_action_just_pressed("primary_shoot")):
 		shoot_primary()
 	if (Input.is_action_just_released("primary_shoot") and primaryLaserIndex == 7):
 		remove_atomic_ray()

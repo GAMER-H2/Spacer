@@ -13,7 +13,7 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="Score" type="Label" parent="."]
-margin_left = 3.0
+margin_left = 7.0
 margin_top = 226.0
 margin_right = 62.0
 margin_bottom = 240.0
@@ -30,7 +30,7 @@ text = "Ammo: 0"
 [node name="Armour" type="Label" parent="."]
 margin_left = 253.0
 margin_top = 226.0
-margin_right = 317.0
+margin_right = 313.0
 margin_bottom = 240.0
 grow_horizontal = 0
 text = "Armour: 0"

@@ -9,7 +9,7 @@ var currentAmmo = 0
 var currentAmrour = 0
 
 func _ready():
-	pass
+	defaultValues()
 
 func saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, globalPosition, score, money):
 	config.set_value("Player", "laserInterval", laserInterval)
@@ -30,10 +30,23 @@ func loadValues():
 	loadedValues[1] = config.get_value("Player", "primaryLaserIndex", 0)
 	loadedValues[2] = config.get_value("Player", "primaryFireRate", 0)
 	loadedValues[3] = config.get_value("Player", "secondaryIndex", 0)
-	loadedValues[4] = config.get_value("Player", "ammo", 10)
+	loadedValues[4] = config.get_value("Player", "ammo", 5)
 	loadedValues[5] = config.get_value("Player", "speed", 200)
 	loadedValues[6] = config.get_value("Player", "armour", 1)
 	loadedValues[7] = config.get_value("Player", "globalPosition", Vector2(160, 207))
 	loadedValues[8] = config.get_value("Player", "score", 0)
 	loadedValues[9] = config.get_value("Player", "money", 50)
 	return loadedValues
+
+func defaultValues():
+	config.set_value("Player", "laserInterval", 0.5)
+	config.set_value("Player", "primaryLaserIndex", 0)
+	config.set_value("Player", "primaryFireRate", 0)
+	config.set_value("Player", "secondaryIndex", 0)
+	config.set_value("Player", "ammo", 5)
+	config.set_value("Player", "speed", 200)
+	config.set_value("Player", "armour", 1)
+	config.set_value("Player", "globalPosition", Vector2(160, 207))
+	config.set_value("Player", "score", 0)
+	config.set_value("Player", "money", 50)
+	config.save(savePath)
