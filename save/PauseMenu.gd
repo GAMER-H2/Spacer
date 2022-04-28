@@ -14,14 +14,11 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("ui_cancel")):
 			visible = false
 			get_tree().paused = false
-			print("here1")
 		if (Input.is_action_just_pressed("ui_accept")):
 			if (quitOption):
 				get_tree().paused = false
-				SaveSystem.defaultValues()
 				if (get_tree().change_scene("res://save/TitleScreen.tscn") != OK):
 					print("Error: Cannot change scenes")
 			else:
 				visible = false
 				get_tree().paused = false
-				print("here2")
