@@ -4,13 +4,18 @@ onready var enemyMatch = preload("res://debug/EnemyFollow.tscn")
 onready var ufo = preload("res://enemies/UfoEnemy.tscn")
 var spawningFinished = false
 onready var gameOverScreen = preload("res://save/GameEnd.tscn")
+var timer = 0
 
 func _ready():
 	startLevel()
 
-func _process(_delta):
+func _process(delta):
 	if (spawningFinished and noEnemies()):
+		var toAdd = int(SaveSystem.currentScore / timer)
+		SaveSystem.currentScore += toAdd
 		nextLevel()
+	else:
+		timer += delta
 	if (Input.is_action_just_pressed("pause")):
 		$PauseMenu.visible = true
 	if (noPlayer()):

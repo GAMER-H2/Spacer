@@ -26,8 +26,6 @@ centered = false
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
-[node name="UI" parent="." instance=ExtResource( 3 )]
-
 [node name="EnemyPath1" type="Path2D" parent="."]
 curve = SubResource( 1 )
 script = ExtResource( 4 )
@@ -56,6 +54,8 @@ margin_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Level Complete!"
+
+[node name="UI" parent="." instance=ExtResource( 3 )]
 
 [node name="PauseMenu" parent="." instance=ExtResource( 6 )]
 visible = false
