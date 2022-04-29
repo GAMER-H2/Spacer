@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/backgrounds/background_0.png" type="Texture" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://save/UI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://enemies/bosses/Guardian.tscn" type="PackedScene" id=4]
+[ext_resource path="res://levels/Level1_5.gd" type="Script" id=5]
+[ext_resource path="res://save/PauseMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://levels/BossFollow.gd" type="Script" id=7]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 160, 51, 0, 0, 0, 0, 88, 46, 0, 0, 0, 0, 33, 55, 0, 0, 0, 0, 20, 94, 0, 0, 0, 0, 161, 52, 0, 0, 0, 0, 227, 47, 0, 0, 0, 0, 289, 54, 0, 0, 0, 0, 300, 94, 0, 0, 0, 0, 161, 52 )
+}
+
+[node name="Level1_5" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Bg" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="BossPath" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="BossFollow" type="PathFollow2D" parent="BossPath"]
+position = Vector2( 160, 51 )
+rotation = 1.5708
+rotate = false
+script = ExtResource( 7 )
+
+[node name="Guardian" parent="BossPath/BossFollow" instance=ExtResource( 4 )]
+rotation = -1.5708
+
+[node name="StartLabel" type="Label" parent="."]
+margin_left = 127.0
+margin_top = 90.0
+margin_right = 197.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Get Ready!"
+
+[node name="EndLabel" type="Label" parent="."]
+visible = false
+margin_left = 110.0
+margin_top = 90.0
+margin_right = 214.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level Complete!"
+
+[node name="UI" parent="." instance=ExtResource( 3 )]
+
+[node name="PauseMenu" parent="." instance=ExtResource( 6 )]
+visible = false

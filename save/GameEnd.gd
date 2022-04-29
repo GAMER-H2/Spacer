@@ -11,5 +11,6 @@ func _ready():
 
 func _process(_delta):
 	if (Input.is_action_just_pressed("ui_accept")):
+		get_tree().paused = false
 		if (get_tree().change_scene("res://save/TitleScreen.tscn") != OK):
 					print("Error: Cannot change scenes")
