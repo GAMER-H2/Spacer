@@ -10,7 +10,7 @@ func _ready():
 
 func _process(delta):
 	if ($StartLabel.visible):
-		$BossPath/BossFollow.global_position.y += 0.4
+		$BossPath/BossFollow.global_position.y += 50 * delta
 	elif (!$StartLabel.visible and !set):
 		$BossPath/BossFollow.state = "go"
 	if (noEnemies()):
@@ -20,9 +20,9 @@ func _process(delta):
 	else:
 		timer += delta
 	if (Input.is_action_just_pressed("pause")):
-		$PauseMenu.visible = true
+		$OnTop/PauseMenu.visible = true
 	if (noPlayer()):
-		add_child(gameOverScreen.instance())
+		$OnTop.add_child(gameOverScreen.instance())
 
 func noEnemies():
 	if (get_node_or_null("BossPath/BossFollow/Guardian") != null):

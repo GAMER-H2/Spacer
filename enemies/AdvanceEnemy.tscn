@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/enemies/sprite_advances0.png" type="Texture" id=1]
 [ext_resource path="res://enemies/AdvanceEnemy.gd" type="Script" id=2]
 [ext_resource path="res://physics/SoftCollision.tscn" type="PackedScene" id=3]
+[ext_resource path="res://physics/HitEffect.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -27,6 +28,8 @@ position = Vector2( -8, 16 )
 
 [node name="Gun2" type="Position2D" parent="."]
 position = Vector2( 8, 16 )
+
+[node name="HitEffect" parent="." instance=ExtResource( 4 )]
 
 [connection signal="area_entered" from="." to="." method="_on_AdvanceEnemy_area_entered"]
 

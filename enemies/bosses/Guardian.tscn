@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/bosses/guardian_boss.png" type="Texture" id=1]
 [ext_resource path="res://enemies/bosses/Guardian.gd" type="Script" id=2]
+[ext_resource path="res://physics/HitEffect.tscn" type="PackedScene" id=3]
 
 [node name="Guardian" type="Area2D" groups=["enemies"]]
 script = ExtResource( 2 )
@@ -15,3 +16,15 @@ polygon = PoolVector2Array( -66, -41, -53, -43, 53, -43, 66, -41, 72, -47, 80, -
 
 [node name="Gun" type="Position2D" parent="."]
 position = Vector2( 0, 45 )
+
+[node name="HitEffect1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 77, -43 )
+
+[node name="HitEffect2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -78, -43 )
+
+[node name="HitEffect3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 58, 44 )
+
+[node name="HitEffect4" parent="." instance=ExtResource( 3 )]
+position = Vector2( -58, 44 )
