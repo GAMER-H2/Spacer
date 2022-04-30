@@ -6,6 +6,7 @@ export (int, 1, 4) var tier = 1
 onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 onready var explosionLoad = preload("res://physics/Explosion.tscn")
+onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 onready var turret = preload("res://player/projectiles/GenerateTurret.tscn")
 onready var sprite1 = preload("res://assets/enemies/rammer_enemy0.png")
 onready var sprite2 = preload("res://assets/enemies/rammer_enemy1.png")
@@ -130,6 +131,21 @@ func take_damage(damage):
 		if (player != null):
 			player.score += 2
 		queue_free()
+	else:
+		spawnHitEffect()
+
+func spawnDeathAnim():
+	var enemyDeath = enemyDeathLoad.instance()
+	enemyDeath.global_position = global_position
+	enemyDeath.play("default")
+	get_tree().get_current_scene().call_deferred("add_child", enemyDeath)
+
+func spawnHitEffect():
+	var hitEffect = $HitEffect
+	hitEffect.play("default")
+	yield(hitEffect, "animation_finished")
+	hitEffect.stop()
+	hitEffect.frame = 0
 
 func freeze():
 	set_physics_process(false)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/explosion/hitEffect/sprite_hit_effect5.png" type="Texture" id=1]
+[ext_resource path="res://assets/explosion/hitEffect/sprite_hit_effect1.png" type="Texture" id=2]
+[ext_resource path="res://assets/explosion/hitEffect/sprite_hit_effect2.png" type="Texture" id=3]
+[ext_resource path="res://assets/explosion/hitEffect/sprite_hit_effect0.png" type="Texture" id=4]
+[ext_resource path="res://assets/explosion/hitEffect/sprite_hit_effect3.png" type="Texture" id=5]
+[ext_resource path="res://assets/explosion/hitEffect/sprite_hit_effect4.png" type="Texture" id=6]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 1 ) ],
+"loop": false,
+"name": "default",
+"speed": 24.0
+} ]
+
+[node name="HitEffect" type="AnimatedSprite"]
+frames = SubResource( 2 )

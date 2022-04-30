@@ -7,6 +7,7 @@ onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 signal spawn_enemy_laser(location)
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
+onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 onready var explosionLoad = preload("res://physics/Explosion.tscn")
 onready var sprite1 = preload("res://assets/enemies/sprite_basic_enemy0.png")
 onready var sprite2 = preload("res://assets/enemies/sprite_basic_enemy1.png")
@@ -125,7 +126,23 @@ func take_damage(damage):
 		var player = get_tree().get_current_scene().get_node_or_null("Player")
 		if (player != null):
 			player.score += 1
+		spawnDeathAnim()
 		queue_free()
+	else:
+		spawnHitEffect()
+
+func spawnDeathAnim():
+	var enemyDeath = enemyDeathLoad.instance()
+	enemyDeath.global_position = global_position
+	enemyDeath.play("default")
+	get_tree().get_current_scene().call_deferred("add_child", enemyDeath)
+
+func spawnHitEffect():
+	var hitEffect = $HitEffect
+	hitEffect.play("default")
+	yield(hitEffect, "animation_finished")
+	hitEffect.stop()
+	hitEffect.frame = 0
 
 func freeze():
 	set_physics_process(false)

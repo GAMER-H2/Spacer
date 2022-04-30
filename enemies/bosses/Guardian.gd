@@ -2,10 +2,11 @@ extends Area2D
 
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
 onready var bossProjectile = preload("res://enemies/projectiles/BossProjectile.tscn")
+onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 var rng = RandomNumberGenerator.new()
 var onLeft = false
 var previousPos = 200
-var hp = 30
+var hp = 10
 
 func _ready():
 	rng.randomize()
@@ -54,5 +55,25 @@ func take_damage(damage):
 	if hp <= 0:
 		var player = get_tree().get_current_scene().get_node_or_null("Player")
 		if (player != null):
-			player.score += 1
+			player.score += 50
+		spawnDeathAnim()
 		queue_free()
+	else:
+		spawnHitEffect()
+
+func spawnDeathAnim():
+	var enemyDeath = enemyDeathLoad.instance()
+	enemyDeath.global_position = global_position
+	enemyDeath.scale = Vector2(5,5)
+	enemyDeath.frames.set_animation_speed("default", 16)
+	enemyDeath.play("default")
+	get_tree().get_current_scene().call_deferred("add_child", enemyDeath)
+
+func spawnHitEffect():
+	var hitEffects = [$HitEffect1, $HitEffect2, $HitEffect3, $HitEffect4]
+	for hit in hitEffects:
+		hit.play("default")
+	yield(hitEffects[3], "animation_finished")
+	for hit in hitEffects:
+		hit.stop()
+		hit.frame = 0

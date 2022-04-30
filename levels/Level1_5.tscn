@@ -53,7 +53,10 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Level Complete!"
 
-[node name="UI" parent="." instance=ExtResource( 3 )]
+[node name="OnTop" type="CanvasLayer" parent="."]
+layer = 50
 
-[node name="PauseMenu" parent="." instance=ExtResource( 6 )]
+[node name="UI" parent="OnTop" instance=ExtResource( 3 )]
+
+[node name="PauseMenu" parent="OnTop" instance=ExtResource( 6 )]
 visible = false
