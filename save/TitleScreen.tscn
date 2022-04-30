@@ -32,3 +32,12 @@ margin_right = 245.0
 margin_bottom = 209.0
 rect_scale = Vector2( 0.7, 0.7 )
 text = "Press SELECT to quit"
+
+[node name="Version" type="Label" parent="."]
+modulate = Color( 0.470588, 0.470588, 0.470588, 1 )
+margin_left = 289.0
+margin_top = 228.0
+margin_right = 329.0
+margin_bottom = 242.0
+rect_scale = Vector2( 0.7, 0.7 )
+text = "v0.2.2"
