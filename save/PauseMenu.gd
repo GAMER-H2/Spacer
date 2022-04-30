@@ -2,6 +2,9 @@ extends Control
 
 var quitOption = false
 
+func _ready():
+	$Cursor.play("default")
+
 func _process(_delta):
 	if (visible == true):
 		get_tree().paused = true
