@@ -66,6 +66,9 @@ func nextLevel():
 	self.add_child(t)
 	t.start()
 	yield(t, "timeout")
+	var coins = get_node_or_null("Coin")
+	if (coins != null):
+		yield(coins, "tree_exited")
 	var player = get_node_or_null("Player")
 	if (player != null):
 		player.saving()

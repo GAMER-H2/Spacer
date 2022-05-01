@@ -7,6 +7,7 @@ func _ready():
 	$Score.text = "Your Score:\n" + str(score)
 	if (winner):
 		$Title.text = "YOU WIN"
+	$Cursor.play("default")
 	get_tree().paused = true
 
 func _process(_delta):

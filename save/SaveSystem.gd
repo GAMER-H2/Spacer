@@ -7,11 +7,12 @@ var loadResponse = config.load(savePath)
 var currentScore = 0
 var currentAmmo = 0
 var currentAmrour = 0
+var currentMoney = 0
 
 func _ready():
 	defaultValues()
 
-func saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, globalPosition, score, money):
+func saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, globalPosition, score, money, maxAmmo, electricField):
 	config.set_value("Player", "laserInterval", laserInterval)
 	config.set_value("Player", "primaryLaserIndex", primaryLaserIndex)
 	config.set_value("Player", "primaryFireRate", primaryFireRate)
@@ -22,10 +23,12 @@ func saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryInde
 	config.set_value("Player", "globalPosition", globalPosition)
 	config.set_value("Player", "score", score)
 	config.set_value("Player", "money", money)
+	config.set_value("Player", "maxAmmo", maxAmmo)
+	config.set_value("Player", "maxAmmo", electricField)
 	config.save(savePath)
 
 func loadValues():
-	var loadedValues = [0, 0, 0, 0, 0, 0, 0, Vector2(0,0), 0, 0]
+	var loadedValues = [0, 0, 0, 0, 0, 0, 0, Vector2(0,0), 0, 0, 0, false]
 	loadedValues[0] = config.get_value("Player", "laserInterval", 0.5)
 	loadedValues[1] = config.get_value("Player", "primaryLaserIndex", 0)
 	loadedValues[2] = config.get_value("Player", "primaryFireRate", 0)
@@ -36,6 +39,8 @@ func loadValues():
 	loadedValues[7] = config.get_value("Player", "globalPosition", Vector2(160, 207))
 	loadedValues[8] = config.get_value("Player", "score", 0)
 	loadedValues[9] = config.get_value("Player", "money", 50)
+	loadedValues[10] = config.get_value("Player", "maxAmmo", 15)
+	loadedValues[11] = config.get_value("Player", "maxAmmo", false)
 	return loadedValues
 
 func defaultValues():
@@ -49,4 +54,6 @@ func defaultValues():
 	config.set_value("Player", "globalPosition", Vector2(160, 207))
 	config.set_value("Player", "score", 0)
 	config.set_value("Player", "money", 50)
+	config.set_value("Player", "maxAmmo", 15)
+	config.set_value("Player", "maxAmmo", false)
 	config.save(savePath)

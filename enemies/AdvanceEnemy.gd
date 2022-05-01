@@ -175,5 +175,6 @@ func findClosestEnemy():
 	return closestEnemy
 
 func _on_AdvanceEnemy_area_entered(area):
-	if area is Player:
+	var player = get_tree().get_current_scene().get_node_or_null("Player")
+	if (area is Player and !player.electricField):
 		area.take_damage(1)

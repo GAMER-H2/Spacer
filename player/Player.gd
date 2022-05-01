@@ -31,6 +31,7 @@ var secondaryIndex = 7
 var secondaryFireRate = 0
 var secondaryMissileInstance
 var ammo = 15
+var maxAmmo = 15
 var turretNum = 0
 
 onready var gun = $Gun
@@ -42,10 +43,13 @@ onready var TurretPos1 = $TurretSpawn1.global_position
 onready var TurretPos2 = $TurretSpawn2.global_position
 var score = 0
 var money = 0
+var electricField = false
 
 func _ready():
 	loading()
 	ammo += 5
+	if (ammo > maxAmmo):
+		ammo = maxAmmo
 
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -64,6 +68,7 @@ func _physics_process(delta):
 	SaveSystem.currentScore = score
 	SaveSystem.currentAmmo = ammo
 	SaveSystem.currentAmrour = armour
+	SaveSystem.currentMoney = money
 	
 	if (Input.is_action_just_pressed("primary_shoot")):
 		shoot_primary()
@@ -87,8 +92,8 @@ func change_secondary(secondaryNum):
 	secondaryIndex = secondaryNum
 
 func _on_Player_area_entered(area):
-	if area.is_in_group("enemies"):
-		area.take_damage(1)
+	if (area.is_in_group("enemies") and electricField):
+		area.take_damage(5)
 
 func shoot_primary():
 	#emit_signal("spawn_primary", gun.global_position)
@@ -138,7 +143,7 @@ func generate_turret():
 		turretNum += 1
 
 func saving():
-	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, global_position, score, money)
+	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, global_position, score, money, maxAmmo, electricField)
 
 func loading():
 	var loadedValues = SaveSystem.loadValues()
@@ -153,3 +158,5 @@ func loading():
 	global_position = loadedValues[7]
 	score = loadedValues[8]
 	money = loadedValues[9]
+	maxAmmo = loadedValues[10]
+	electricField = loadedValues[11]
