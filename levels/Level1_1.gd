@@ -8,15 +8,15 @@ var timer = 0
 onready var explosionLoad = preload("res://physics/Explosion.tscn")
 var lastPlayerPos
 var explosionWait = null
+var ended = false
 
 func _ready():
 	startLevel()
 
 func _process(delta):
-	if (spawningFinished and noEnemies()):
-		var toAdd = int(SaveSystem.currentScore / timer)
-		SaveSystem.currentScore += toAdd
+	if (spawningFinished and noEnemies() and !ended):
 		nextLevel()
+		ended = true
 	else:
 		timer += delta
 	if (Input.is_action_just_pressed("pause")):
@@ -59,6 +59,8 @@ func startLevel():
 	$StartLabel.visible = false
 
 func nextLevel():
+	var toAdd = int(SaveSystem.currentScore / timer)
+	SaveSystem.currentScore += toAdd
 	$EndLabel.visible = true
 	var t = Timer.new()
 	t.set_wait_time(2)
@@ -72,5 +74,5 @@ func nextLevel():
 	var player = get_node_or_null("Player")
 	if (player != null):
 		player.saving()
-	if (get_tree().change_scene("res://save/TitleScreen.tscn") != OK):
+	if (get_tree().change_scene("res://save/Shop.tscn") != OK):
 			print("Error: Cannot change scenes")

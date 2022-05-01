@@ -3,6 +3,7 @@ extends Node2D
 onready var gameOverScreen = preload("res://save/GameEnd.tscn")
 var timer = 0
 var set = false
+var ended = false
 
 func _ready():
 	startLevel()
@@ -13,10 +14,9 @@ func _process(delta):
 		$BossPath/BossFollow.global_position.y += 50 * delta
 	elif (!$StartLabel.visible and !set):
 		$BossPath/BossFollow.state = "go"
-	if (noEnemies()):
-		var toAdd = int(SaveSystem.currentScore / timer)
-		SaveSystem.currentScore += toAdd
+	if (noEnemies() and !ended):
 		nextLevel()
+		ended = true
 	else:
 		timer += delta
 	if (Input.is_action_just_pressed("pause")):
@@ -47,6 +47,8 @@ func startLevel():
 	$StartLabel.visible = false
 
 func nextLevel():
+	var toAdd = int(SaveSystem.currentScore / timer)
+	SaveSystem.currentScore += toAdd
 	$EndLabel.visible = true
 	var t = Timer.new()
 	t.set_wait_time(2)

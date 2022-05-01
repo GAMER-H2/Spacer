@@ -24,7 +24,7 @@ func saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryInde
 	config.set_value("Player", "score", score)
 	config.set_value("Player", "money", money)
 	config.set_value("Player", "maxAmmo", maxAmmo)
-	config.set_value("Player", "maxAmmo", electricField)
+	config.set_value("Player", "electricField", electricField)
 	config.save(savePath)
 
 func loadValues():
@@ -40,7 +40,7 @@ func loadValues():
 	loadedValues[8] = config.get_value("Player", "score", 0)
 	loadedValues[9] = config.get_value("Player", "money", 50)
 	loadedValues[10] = config.get_value("Player", "maxAmmo", 15)
-	loadedValues[11] = config.get_value("Player", "maxAmmo", false)
+	loadedValues[11] = config.get_value("Player", "electricField", false)
 	return loadedValues
 
 func defaultValues():
@@ -55,5 +55,5 @@ func defaultValues():
 	config.set_value("Player", "score", 0)
 	config.set_value("Player", "money", 50)
 	config.set_value("Player", "maxAmmo", 15)
-	config.set_value("Player", "maxAmmo", false)
+	config.set_value("Player", "electricField", false)
 	config.save(savePath)

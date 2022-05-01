@@ -8,8 +8,7 @@ var states = ["primary", "secondary", "misc"]
 var stateIndex = 0
 var state = states[stateIndex]
 var currentPos = 1
-var nextLevelNum = 0
-var nextCoupleLevels = ["", ""]
+var skipLevel = false
 
 var money = -1
 var primaryLaserIndex = -1
@@ -31,6 +30,7 @@ func _ready():
 	#get_tree().paused = true
 
 func _process(_delta):
+	$Money.text = "$ " + str(money)
 	if (Input.is_action_just_pressed("ui_down")):
 		currentPos -= 1
 		if (currentPos <= -1):
@@ -59,23 +59,24 @@ func _process(_delta):
 			exit()
 		elif (state == states[0]):
 			var newMoney = money - primaryValues[currentPos-1]
-			if (newMoney < 0):
+			if (newMoney > 0):
 				money = newMoney
 				primaryLaserIndex = currentPos-1
 		elif (state == states[1]):
 			var newMoney = money - secondaryValues[currentPos-1]
-			if (newMoney < 0):
+			if (newMoney > 0):
 				money = newMoney
 				secondaryIndex = currentPos-1
 		elif (state == states[2]):
 			var newMoney = money - miscValues[currentPos-1]
-			if (newMoney < 0):
+			if (newMoney > 0):
 				money = newMoney
 				miscSorter()
 
 func exit():
 	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, playerPos, score, money, maxAmmo, electricField)
-	if (get_tree().change_scene(nextCoupleLevels[nextLevelNum]) != OK):
+	print(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, playerPos, score, money, maxAmmo, electricField)
+	if (get_tree().change_scene("res://levels/Level1_5.tscn") != OK):
 			print("Error: Cannot change scenes")
 
 func currentMisc():
@@ -178,4 +179,4 @@ func miscSorter():
 	elif (currentPos == 7):
 		electricField = true
 	elif (currentPos == 8):
-		nextLevelNum += 1
+		skipLevel = true
