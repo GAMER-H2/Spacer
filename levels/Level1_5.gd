@@ -18,6 +18,7 @@ func _process(delta):
 		$BossPath/BossFollow.global_position.y += 50 * delta
 	elif (!$StartLabel.visible and !set):
 		$BossPath/BossFollow.state = "go"
+		set = true
 	if (noEnemies() and !ended):
 		$EndLabel.visible = true
 		var areThereCoins = false

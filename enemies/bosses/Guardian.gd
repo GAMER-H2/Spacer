@@ -60,6 +60,7 @@ func take_damage(damage):
 		spawnDeathAnim()
 		dropLoot()
 		queue_free()
+		get_parent().queue_free()
 	else:
 		spawnHitEffect()
 

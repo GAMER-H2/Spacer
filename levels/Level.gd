@@ -9,6 +9,7 @@ onready var explosionLoad = preload("res://physics/Explosion.tscn")
 var lastPlayerPos
 var explosionWait = null
 var ended = false
+var set = false
 onready var shopLoad = preload("res://save/Shop.tscn")
 onready var middleBoss = get_node_or_null("Enemies/BossPath/BossFollow")
 
@@ -21,8 +22,9 @@ func _process(delta):
 	if (middleBoss != null):
 		if ($StartLabel.visible):
 			middleBoss.global_position.y += 50 * delta
-		elif (!$StartLabel.visible):
+		elif (!$StartLabel.visible and !set):
 			middleBoss.state = "go"
+			set = true
 	if (spawningFinished and noEnemies() and !ended):
 		$EndLabel.visible = true
 		var areThereCoins = false
