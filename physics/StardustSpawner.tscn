@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://physics/StardustSpawner.gd" type="Script" id=1]
+
+[node name="StardustSpawner" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="SpawnPositions" type="Node2D" parent="."]
+
+[node name="Spawn1" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 32, 0 )
+
+[node name="Spawn2" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 64, 0 )
+
+[node name="Spawn3" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 96, 0 )
+
+[node name="Spawn4" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 128, 0 )
+
+[node name="Spawn5" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 160, 0 )
+
+[node name="Spawn6" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 192, 0 )
+
+[node name="Spawn7" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 224, 0 )
+
+[node name="Spawn8" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 256, 0 )
+
+[node name="Spawn9" type="Position2D" parent="SpawnPositions"]
+position = Vector2( 288, 0 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]

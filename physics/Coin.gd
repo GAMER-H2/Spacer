@@ -30,5 +30,5 @@ func _physics_process(delta):
 
 func _on_Coin_area_entered(area):
 	if area is Player:
-		area.money += value
+		area.moneyAdd(value)
 		queue_free()

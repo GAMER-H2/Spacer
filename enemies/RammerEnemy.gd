@@ -7,7 +7,6 @@ onready var pathfollow = get_parent()
 onready var softCollision = $SoftCollision
 onready var explosionLoad = preload("res://physics/Explosion.tscn")
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
-onready var turret = preload("res://player/projectiles/GenerateTurret.tscn")
 onready var sprite1 = preload("res://assets/enemies/rammer_enemy0.png")
 onready var sprite2 = preload("res://assets/enemies/rammer_enemy1.png")
 onready var sprite3 = preload("res://assets/enemies/rammer_enemy2.png")
@@ -183,6 +182,4 @@ func findClosestEnemy():
 func _on_RammerEnemy_area_entered(area):
 	var player = get_tree().get_current_scene().get_node_or_null("Player")
 	if (area is Player and !player.electricField):
-		area.take_damage(1)
-	if (area is turret):
 		area.take_damage(1)

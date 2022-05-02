@@ -18,3 +18,5 @@ shape = SubResource( 1 )
 
 [node name="Gun" type="Position2D" parent="."]
 position = Vector2( 0, -9 )
+
+[connection signal="area_entered" from="." to="." method="_on_GenerateTurret_area_entered"]

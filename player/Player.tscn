@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/player.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
+[ext_resource path="res://physics/Rocket.tscn" type="PackedScene" id=3]
 
 [node name="Player" type="Area2D"]
 script = ExtResource( 2 )
@@ -21,5 +22,20 @@ position = Vector2( 27, 3 )
 
 [node name="TurretSpawn2" type="Position2D" parent="."]
 position = Vector2( -27, 3 )
+
+[node name="Money" type="Label" parent="."]
+visible = false
+margin_left = 8.0
+margin_top = -15.0
+margin_right = 48.0
+margin_bottom = -1.0
+rect_scale = Vector2( 0.7, 0.7 )
+text = "+0"
+
+[node name="Rocket" parent="." instance=ExtResource( 3 )]
+position = Vector2( 5, 14 )
+
+[node name="Rocket2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -5, 14 )
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]

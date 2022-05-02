@@ -104,6 +104,7 @@ func freeze():
 	self.add_child(t)
 	t.start()
 	yield(t, "timeout")
+	t.queue_free()
 	set_physics_process(true)
 
 func turn():

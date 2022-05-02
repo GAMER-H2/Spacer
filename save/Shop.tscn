@@ -20,6 +20,7 @@ animations = [ {
 } ]
 
 [node name="Shop" type="Control"]
+pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 10 )
@@ -56,7 +57,9 @@ margin_right = 133.0
 margin_bottom = 66.0
 text = "$ 0"
 
-[node name="MainWindow" type="CanvasLayer" parent="."]
+[node name="MainWindow" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
 
 [node name="SubTitle" type="Label" parent="MainWindow"]
 margin_left = 151.0

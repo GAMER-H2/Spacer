@@ -25,3 +25,7 @@ func take_damage(damage):
 			player.turretNum -= 1
 		spawnExplosion()
 		queue_free()
+
+func _on_GenerateTurret_area_entered(area):
+	if area.is_in_group("enemies"):
+		take_damage(1)

@@ -10,8 +10,7 @@ func _ready():
 
 func _process(_delta):
 	if (!coinDone):
-		var chance = rng.randi_range(1,2)
-		print(chance)
+		var chance = rng.randi_range(1,1)
 		if (chance == 1):
 			var coin = coinLoad.instance()
 			coin.global_position = global_position

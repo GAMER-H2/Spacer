@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/projectiles/auto-aim_missile.png" type="Texture" id=1]
 [ext_resource path="res://player/projectiles/AutoAimMissile.gd" type="Script" id=2]
+[ext_resource path="res://physics/Rocket.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -9,6 +10,9 @@ height = 6.0
 
 [node name="AutoAimMissile" type="Area2D"]
 script = ExtResource( 2 )
+
+[node name="Rocket" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 6 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 1.5, 1.5 )

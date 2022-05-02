@@ -5,6 +5,7 @@ var damage = 8
 
 func _physics_process(delta):
 	global_position.y += -speed * delta
+	rotation_degrees += 1
 	if (global_position.x < 0 or global_position.x > 320 or global_position.y < 0 or global_position.y > 240):
 		queue_free()
 

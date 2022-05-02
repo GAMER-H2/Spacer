@@ -9,6 +9,7 @@ var stateIndex = 0
 var state = states[stateIndex]
 var currentPos = 1
 var skipLevel = false
+var popInSpeed = 400
 
 var money = -1
 var primaryLaserIndex = -1
@@ -24,12 +25,15 @@ var playerPos = Vector2(0,0)
 var score = -1
 
 func _ready():
+	rect_global_position.y = -240
 	currentMisc()
 	$Cursor.global_position = positions[currentPos].global_position
 	$Cursor.play("default")
-	#get_tree().paused = true
+	get_tree().paused = true
 
-func _process(_delta):
+func _process(delta):
+	if (rect_global_position.y != 0):
+		rect_global_position.y += min(popInSpeed * delta, (Vector2(0,0) - rect_global_position).length())
 	$Money.text = "$ " + str(money)
 	if (Input.is_action_just_pressed("ui_down")):
 		currentPos -= 1
@@ -59,12 +63,12 @@ func _process(_delta):
 			exit()
 		elif (state == states[0]):
 			var newMoney = money - primaryValues[currentPos-1]
-			if (newMoney > 0):
+			if (newMoney > 0 and primaryLaserIndex != currentPos-1):
 				money = newMoney
 				primaryLaserIndex = currentPos-1
 		elif (state == states[1]):
 			var newMoney = money - secondaryValues[currentPos-1]
-			if (newMoney > 0):
+			if (newMoney > 0 and secondaryIndex != currentPos-1):
 				money = newMoney
 				secondaryIndex = currentPos-1
 		elif (state == states[2]):
@@ -74,10 +78,9 @@ func _process(_delta):
 				miscSorter()
 
 func exit():
+	get_tree().paused = false
 	SaveSystem.saveValues(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, playerPos, score, money, maxAmmo, electricField)
-	print(laserInterval, primaryLaserIndex, primaryFireRate, secondaryIndex, ammo, speed, armour, playerPos, score, money, maxAmmo, electricField)
-	if (get_tree().change_scene("res://levels/Level1_5.tscn") != OK):
-			print("Error: Cannot change scenes")
+	SaveSystem.nextLevel()
 
 func currentMisc():
 	var loadedValues = SaveSystem.loadValues()
@@ -127,7 +130,7 @@ func switchToSecondary():
 	$MainWindow/SubTitle.text = "Secondary Weapon"
 	$MainWindow/Opt1.text = "Player Turret"
 	$MainWindow/Price1.text = "$10,000"
-	$MainWindow/Opt2.text = "Auto-aim Missile"
+	$MainWindow/Opt2.text = "Guided Missile"
 	$MainWindow/Price2.text = "$5,000"
 	$MainWindow/Opt3.text = "Mines"
 	$MainWindow/Price3.text = "$2,000"
@@ -177,6 +180,13 @@ func miscSorter():
 	elif (currentPos == 6):
 		armour += 1
 	elif (currentPos == 7):
-		electricField = true
+		if (!electricField):
+			electricField = true
+		else:
+			money += miscValues[currentPos-1]
 	elif (currentPos == 8):
-		skipLevel = true
+		if (!skipLevel):
+			SaveSystem.currentLvl += 1
+			skipLevel = true
+		else:
+			money += miscValues[currentPos-1]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/explosion/rocket/sprite_rocket1.png" type="Texture" id=1]
+[ext_resource path="res://assets/explosion/rocket/sprite_rocket0.png" type="Texture" id=2]
+[ext_resource path="res://physics/Rocket.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 16.0
+} ]
+
+[node name="Rocket" type="AnimatedSprite"]
+frames = SubResource( 1 )
+script = ExtResource( 3 )

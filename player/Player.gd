@@ -44,6 +44,7 @@ onready var TurretPos2 = $TurretSpawn2.global_position
 var score = 0
 var money = 0
 var electricField = false
+onready var hitEffectLoad = preload("res://physics/HitEffect.tscn")
 
 func _ready():
 	loading()
@@ -84,12 +85,41 @@ func take_damage(damage):
 	armour -= damage
 	if armour <= 0:
 		queue_free()
+	else:
+		spawnHitEffect()
+
+func spawnHitEffect():
+	var hitEffect = $HitEffect
+	hitEffect.play("default")
+	yield(hitEffect, "animation_finished")
+	hitEffect.stop()
+	hitEffect.frame = 0
 
 func change_laser(laserNum):
 	primaryLaserIndex = laserNum
 
 func change_secondary(secondaryNum):
 	secondaryIndex = secondaryNum
+
+func moneyAdd(value):
+	money += value
+	$Money.text = "+" + str(value)
+	if ($Money.visible):
+		var t = get_node_or_null("MrTimer")
+		t.stop()
+		t.set_wait_time(1)
+		t.start()
+	else:
+		$Money.visible = true
+		var t = Timer.new()
+		t.name = "MrTimer"
+		t.set_wait_time(1)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		t.queue_free()
+		$Money.visible = false
 
 func _on_Player_area_entered(area):
 	if (area.is_in_group("enemies") and electricField):

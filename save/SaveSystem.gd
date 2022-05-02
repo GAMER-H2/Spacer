@@ -4,6 +4,14 @@ var savePath = "res://save/player-state.cfg"
 var config = ConfigFile.new()
 var loadResponse = config.load(savePath)
 
+const lvls = ["res://levels/Level1_1.tscn", "res://levels/Level1_2.tscn", "res://levels/Level1_3.tscn", "res://levels/Level1_4.tscn", "res://levels/Level1_5.tscn",
+"res://levels/Level2_1.tscn", "res://levels/Level2_2.tscn", "res://levels/Level2_3.tscn", "res://levels/Level2_4.tscn", "res://levels/Level2_5.tscn",
+"res://levels/Level3_1.tscn", "res://levels/Level3_2.tscn", "res://levels/Level3_3.tscn", "res://levels/Level3_4.tscn", "res://levels/Level3_5.tscn",
+"res://levels/Level4_1.tscn", "res://levels/Level4_2.tscn", "res://levels/Level4_3.tscn", "res://levels/Level4_4.tscn", "res://levels/Level4_5.tscn",
+"res://levels/Level5_1.tscn", "res://levels/Level5_2.tscn", "res://levels/Level5_3.tscn", "res://levels/Level5_4.tscn", "res://levels/Level5_5.tscn",
+"res://levels/Level6_1.tscn", "res://levels/Level6_2.tscn", "res://levels/Level6_3.tscn", "res://levels/Level6_4.tscn", "res://levels/Level6_5.tscn",]
+var currentLvl = 0
+
 var currentScore = 0
 var currentAmmo = 0
 var currentAmrour = 0
@@ -57,3 +65,9 @@ func defaultValues():
 	config.set_value("Player", "maxAmmo", 15)
 	config.set_value("Player", "electricField", false)
 	config.save(savePath)
+	currentLvl = 0
+
+func nextLevel():
+	if (get_tree().change_scene(lvls[currentLvl]) != OK):
+			print("Error: Cannot change scenes")
+	currentLvl += 1
