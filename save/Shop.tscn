@@ -249,4 +249,5 @@ text = "Exit"
 
 [node name="Cursor" type="AnimatedSprite" parent="."]
 position = Vector2( 160, 46 )
+scale = Vector2( 1.2, 1.2 )
 frames = SubResource( 1 )

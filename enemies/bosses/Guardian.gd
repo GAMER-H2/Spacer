@@ -3,6 +3,7 @@ extends Area2D
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
 onready var bossProjectile = preload("res://enemies/projectiles/BossProjectile.tscn")
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
+onready var coinLoad = preload("res://physics/Coin.tscn")
 var rng = RandomNumberGenerator.new()
 var onLeft = false
 var previousPos = 200
@@ -57,6 +58,7 @@ func take_damage(damage):
 		if (player != null):
 			player.score += 50
 		spawnDeathAnim()
+		dropLoot()
 		queue_free()
 	else:
 		spawnHitEffect()
@@ -68,6 +70,24 @@ func spawnDeathAnim():
 	enemyDeath.frames.set_animation_speed("default", 16)
 	enemyDeath.play("default")
 	get_tree().get_current_scene().call_deferred("add_child", enemyDeath)
+
+func dropLoot():
+	var coins = [coinLoad.instance(), coinLoad.instance(), coinLoad.instance(), coinLoad.instance(), coinLoad.instance()]
+	var minX = (global_position.x - 20) - 5
+	var maxX = (global_position.x + 20) + 5
+	var minY = (global_position.y - 20) - 5
+	var maxY = (global_position.y + 20) + 5
+	for coin in coins:
+		var typeChance = rng.randi_range(2,3)
+		if (typeChance == 2):
+			coin.type = "gold"
+		elif (typeChance == 3):
+			coin.type = "blue"
+		var targetX = rng.randi_range(minX, maxX)
+		var targetY = rng.randi_range(minY, maxY)
+		coin.global_position.x = targetX
+		coin.global_position.y = targetY
+		get_tree().get_current_scene().call_deferred("add_child", coin)
 
 func spawnHitEffect():
 	var hitEffects = [$HitEffect1, $HitEffect2, $HitEffect3, $HitEffect4]

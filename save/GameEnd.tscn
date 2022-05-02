@@ -65,4 +65,5 @@ align = 1
 
 [node name="Cursor" type="AnimatedSprite" parent="."]
 position = Vector2( 128, 160 )
+scale = Vector2( 1.2, 1.2 )
 frames = SubResource( 1 )

@@ -20,7 +20,7 @@ func _process(delta):
 		var areThereCoins = false
 		var coins = get_children()
 		for coin in coins:
-			if ("Coin" in coin.name):
+			if ("Coin" in coin.name or "EnemyDeath" in coin.name):
 				areThereCoins = true
 		if (!areThereCoins):
 			nextLevel()
