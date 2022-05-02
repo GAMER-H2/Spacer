@@ -4,7 +4,10 @@ onready var gameOverScreen = preload("res://save/GameEnd.tscn")
 var timer = 0
 var set = false
 var ended = false
+var explosionWait = null
+var lastPlayerPos
 onready var shopLoad = preload("res://save/Shop.tscn")
+onready var explosionLoad = preload("res://physics/Explosion.tscn")
 
 func _ready():
 	startLevel()
@@ -30,6 +33,9 @@ func _process(delta):
 	if (Input.is_action_just_pressed("pause")):
 		$OnTop/PauseMenu.visible = true
 	if (noPlayer()):
+		if (explosionWait == null):
+			spawnExplosion()
+		yield(explosionWait, "animation_finished")
 		$OnTop.add_child(gameOverScreen.instance())
 
 func noEnemies():
@@ -43,7 +49,15 @@ func noPlayer():
 	if (player == null):
 		return true
 	else:
+		lastPlayerPos = player.global_position
 		return false
+
+func spawnExplosion():
+	var explosion = explosionLoad.instance()
+	explosion.global_position = lastPlayerPos
+	explosion.scale = Vector2(2.5,2.5)
+	explosionWait = explosion.get_child(0)
+	get_tree().get_current_scene().call_deferred("add_child", explosion)
 
 func startLevel():
 	var t = Timer.new()

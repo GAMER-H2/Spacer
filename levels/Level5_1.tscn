@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/backgrounds/background_4.png" type="Texture" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://save/UI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://debug/EnemyPath.gd" type="Script" id=4]
+[ext_resource path="res://levels/Level.gd" type="Script" id=5]
+[ext_resource path="res://save/PauseMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://physics/StardustSpawner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sounds/music/TEMP_levelTheme.mp3" type="AudioStream" id=8]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -18, 105, 0, 0, 0, 0, -7, 96, 0, 0, 0, 0, 14, 104, 0, 0, 0, 0, 34, 120, 0, 0, 0, 0, 61, 123, 0, 0, 0, 0, 83, 111, 0, 0, 0, 0, 100, 102, 0, 0, 0, 0, 113, 86 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 351, 60, 0, 0, 0, 0, 344, 74, 0, 0, 0, 0, 333, 78, 0, 0, 0, 0, 321, 78, 0, 0, 0, 0, 302, 69, 0, 0, 0, 0, 287, 59, 0, 0, 0, 0, 255, 55, 0, 0, 0, 0, 234, 55, 0, 0, 0, 0, 217, 70, 0, 0, 0, 0, 208, 76, 0, 0, 0, 0, 194, 94 )
+}
+
+[node name="Level5_1" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[node name="Bg" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="StardustSpawner" parent="." instance=ExtResource( 7 )]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyPath1" type="Path2D" parent="Enemies"]
+curve = SubResource( 1 )
+script = ExtResource( 4 )
+enemyLimit = 6
+tier = 4
+
+[node name="EnemyPath2" type="Path2D" parent="Enemies"]
+curve = SubResource( 2 )
+script = ExtResource( 4 )
+enemyLimit = 6
+tier = 4
+
+[node name="StartLabel" type="Label" parent="."]
+margin_left = 127.0
+margin_top = 90.0
+margin_right = 197.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Get Ready!"
+
+[node name="EndLabel" type="Label" parent="."]
+visible = false
+margin_left = 110.0
+margin_top = 90.0
+margin_right = 214.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level Complete!"
+
+[node name="OnTop" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="UI" parent="OnTop" instance=ExtResource( 3 )]
+
+[node name="PauseMenu" parent="OnTop" instance=ExtResource( 6 )]
+visible = false

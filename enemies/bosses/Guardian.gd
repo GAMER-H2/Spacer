@@ -78,15 +78,14 @@ func dropLoot():
 	var minY = (global_position.y - 20) - 5
 	var maxY = (global_position.y + 20) + 5
 	for coin in coins:
+		var targetX = rng.randi_range(minX, maxX)
+		var targetY = rng.randi_range(minY, maxY)
+		coin.global_position = Vector2(targetX, targetY)
 		var typeChance = rng.randi_range(2,3)
 		if (typeChance == 2):
 			coin.type = "gold"
 		elif (typeChance == 3):
 			coin.type = "blue"
-		var targetX = rng.randi_range(minX, maxX)
-		var targetY = rng.randi_range(minY, maxY)
-		coin.global_position.x = targetX
-		coin.global_position.y = targetY
 		get_tree().get_current_scene().call_deferred("add_child", coin)
 
 func spawnHitEffect():

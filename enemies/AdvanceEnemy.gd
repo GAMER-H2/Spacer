@@ -31,7 +31,7 @@ func _ready( ):
 	rng.randomize()
 	if (tier == 1):
 		hp = 4
-		speed = 75
+		speed = 100
 		shootChance = 1000
 		$Sprite.set_texture(sprite1)
 	elif (tier == 2):
@@ -41,13 +41,13 @@ func _ready( ):
 		$Sprite.set_texture(sprite2)
 	elif (tier == 3):
 		hp = 10
-		speed = 100
-		shootChance = 800
+		speed = 125
+		shootChance = 750
 		$Sprite.set_texture(sprite3)
 	elif (tier == 4):
 		hp = 13
-		speed = 125
-		shootChance = 700
+		speed = 150
+		shootChance = 500
 		$Sprite.set_texture(sprite4)
 
 func _physics_process(delta):
@@ -124,6 +124,7 @@ func take_damage(damage):
 		var player = get_tree().get_current_scene().get_node_or_null("Player")
 		if (player != null):
 			player.score += 4
+		spawnDeathAnim()
 		queue_free()
 	else:
 		spawnHitEffect()

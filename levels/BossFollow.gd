@@ -1,7 +1,7 @@
 extends PathFollow2D
 
 var speed = 100
-var state = "wait"
+export (String, "wait", "go") var state = "wait"
 
 func _process(delta):
 	if (state == "go"):

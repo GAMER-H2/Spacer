@@ -3,7 +3,6 @@ extends Area2D
 export (String, "down", "aim", "debug") var state = "down"
 var velocity = Vector2(0,0)
 onready var player = get_tree().get_current_scene().get_node_or_null("Player")
-onready var turret = preload("res://player/projectiles/GenerateTurret.tscn")
 
 var speed = 100
 
@@ -24,6 +23,6 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_EnemyLaser_area_entered(area):
-	if (area is Player or area == turret):
+	if (area is Player or "Turret" in area.name):
 		area.take_damage(1)
 		queue_free()

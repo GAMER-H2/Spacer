@@ -135,6 +135,7 @@ func take_damage(damage):
 		player = get_tree().get_current_scene().get_node_or_null("Player")
 		if (player != null):
 			player.score += 3
+		spawnDeathAnim()
 		queue_free()
 	else:
 		spawnHitEffect()

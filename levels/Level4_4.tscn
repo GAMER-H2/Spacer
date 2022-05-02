@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/backgrounds/background_3.png" type="Texture" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://save/UI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://debug/EnemyPath.gd" type="Script" id=4]
+[ext_resource path="res://levels/Level.gd" type="Script" id=5]
+[ext_resource path="res://save/PauseMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://physics/StardustSpawner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sounds/music/TEMP_levelTheme.mp3" type="AudioStream" id=8]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 348, 100, 0, 0, 0, 0, 333, 83, 0, 0, 0, 0, 300, 61, 0, 0, 0, 0, 255, 68, 0, 0, 0, 0, 238, 111, 0, 0, 0, 0, 224, 134, 0, 0, 0, 0, 194, 132, 0, 0, 0, 0, 185, 112, 0, 0, 0, 0, 172, 87 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -42, 115, 0, 0, 0, 0, -32, 91, 0, 0, 0, 0, -22, 81, 0, 0, 0, 0, -5, 73, 0, 0, 0, 0, 8, 68, 0, 0, 0, 0, 32, 81, 0, 0, 0, 0, 48, 98, 0, 0, 0, 0, 73, 126, 0, 0, 0, 0, 92, 137, 0, 0, 0, 0, 114, 131, 0, 0, 0, 0, 126, 121, 0, 0, 0, 0, 140, 110, 0, 0, 0, 0, 150, 93, 0, 0, 0, 0, 154, 87 )
+}
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 153, -17, 0, 0, 0, 0, 145, -5, 0, 0, 0, 0, 136, 20, 0, 0, 0, 0, 144, 36, 0, 0, 0, 0, 179, 36, 0, 0, 0, 0, 187, 23, 0, 0, 0, 0, 173, 23, 0, 0, 0, 0, 158, 28, 0, 0, 0, 0, 160, 46 )
+}
+
+[node name="Level4_4" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[node name="Bg" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="StardustSpawner" parent="." instance=ExtResource( 7 )]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="EnemyPath1" type="Path2D" parent="Enemies"]
+curve = SubResource( 1 )
+script = ExtResource( 4 )
+enemyLimit = 8
+tier = 3
+
+[node name="EnemyPath2" type="Path2D" parent="Enemies"]
+curve = SubResource( 2 )
+script = ExtResource( 4 )
+enemyLimit = 8
+tier = 3
+
+[node name="EnemyPath3" type="Path2D" parent="Enemies"]
+curve = SubResource( 3 )
+script = ExtResource( 4 )
+enemyType = "turret"
+tier = 3
+
+[node name="StartLabel" type="Label" parent="."]
+margin_left = 127.0
+margin_top = 90.0
+margin_right = 197.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Get Ready!"
+
+[node name="EndLabel" type="Label" parent="."]
+visible = false
+margin_left = 110.0
+margin_top = 90.0
+margin_right = 214.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level Complete!"
+
+[node name="OnTop" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="UI" parent="OnTop" instance=ExtResource( 3 )]
+
+[node name="PauseMenu" parent="OnTop" instance=ExtResource( 6 )]
+visible = false

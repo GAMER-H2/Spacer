@@ -20,5 +20,5 @@ func _process(delta):
 		enemyCount += 1
 	
 	if (enemyCount == enemyLimit):
-		get_parent().spawningFinished = true
+		get_tree().get_current_scene().spawningFinished = true
 		enemyCount += 1

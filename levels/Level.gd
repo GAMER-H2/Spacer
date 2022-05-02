@@ -10,11 +10,19 @@ var lastPlayerPos
 var explosionWait = null
 var ended = false
 onready var shopLoad = preload("res://save/Shop.tscn")
+onready var middleBoss = get_node_or_null("Enemies/BossPath/BossFollow")
 
 func _ready():
 	startLevel()
+	if (middleBoss != null):
+		middleBoss.global_position.y = -50
 
 func _process(delta):
+	if (middleBoss != null):
+		if ($StartLabel.visible):
+			middleBoss.global_position.y += 50 * delta
+		elif (!$StartLabel.visible):
+			middleBoss.state = "go"
 	if (spawningFinished and noEnemies() and !ended):
 		$EndLabel.visible = true
 		var areThereCoins = false
@@ -36,10 +44,12 @@ func _process(delta):
 		$OnTop.add_child(gameOverScreen.instance())
 
 func noEnemies():
-	var children = $EnemyPath1.get_children() + $EnemyPath2.get_children()
+	var children = $Enemies.get_children()
 	for child in children:
-		if (child is PathFollow2D):
-			return false
+		var enemies = child.get_children()
+		for enemy in enemies:
+			if (enemy is PathFollow2D):
+				return false
 	return true
 
 func noPlayer():
