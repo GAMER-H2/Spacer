@@ -45,12 +45,14 @@ text = "Press SELECT to quit"
 
 [node name="Version" type="Label" parent="."]
 modulate = Color( 0.470588, 0.470588, 0.470588, 1 )
-margin_left = 289.0
+margin_left = 252.0
 margin_top = 228.0
-margin_right = 329.0
+margin_right = 346.0
 margin_bottom = 242.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_scale = Vector2( 0.7, 0.7 )
-text = "v0.4.1"
+text = "Spacer - v1.0.0"
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 160, 120 )

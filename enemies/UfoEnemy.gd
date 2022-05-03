@@ -6,6 +6,7 @@ export (int, 1, 4) var tier = 1
 onready var softCollision = $SoftCollision
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
+onready var coinLoad = preload("res://physics/Coin.tscn")
 onready var sprite1 = preload("res://assets/enemies/sprite_ufo0.png")
 onready var sprite2 = preload("res://assets/enemies/sprite_ufo1.png")
 onready var sprite3 = preload("res://assets/enemies/sprite_ufo2.png")
@@ -89,6 +90,10 @@ func spawnDeathAnim():
 	enemyDeath.global_position = global_position
 	enemyDeath.play("default")
 	get_tree().get_current_scene().call_deferred("add_child", enemyDeath)
+	var coin = coinLoad.instance()
+	coin.global_position = global_position
+	coin.type = "purple"
+	get_tree().get_current_scene().call_deferred("add_child", coin)
 
 func spawnHitEffect():
 	var hitEffect = $HitEffect

@@ -1,6 +1,6 @@
 extends Area2D
 
-var angle = 0
+var angle = deg2rad(90)
 var velocity = Vector2(0,0)
 var speed = 100
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")

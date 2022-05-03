@@ -12,8 +12,10 @@ var ended = false
 var set = false
 onready var shopLoad = preload("res://save/Shop.tscn")
 onready var middleBoss = get_node_or_null("Enemies/BossPath/BossFollow")
+var rng = RandomNumberGenerator.new()
 
 func _ready():
+	rng.randomize()
 	startLevel()
 	if (middleBoss != null):
 		middleBoss.global_position.y = -50
@@ -44,6 +46,11 @@ func _process(delta):
 			spawnExplosion()
 		yield(explosionWait, "animation_finished")
 		$OnTop.add_child(gameOverScreen.instance())
+	if (rng.randi_range(1,10000) == 1):
+		var ufoInstance = ufo.instance()
+		ufoInstance.global_position = Vector2(340,10)
+		ufoInstance.tier = rng.randi_range(1,4)
+		add_child(ufoInstance)
 
 func noEnemies():
 	var children = $Enemies.get_children()

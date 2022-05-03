@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/backgrounds/background_4.png" type="Texture" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://save/UI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://enemies/bosses/TheTurret.tscn" type="PackedScene" id=4]
+[ext_resource path="res://levels/Level5_5.gd" type="Script" id=5]
+[ext_resource path="res://save/PauseMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://levels/BossFollow.gd" type="Script" id=7]
+[ext_resource path="res://physics/StardustSpawner.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/sounds/music/TEMP_bossTheme.mp3" type="AudioStream" id=9]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 160, 64, 0, 0, 0, 0, 57, 64, 0, 0, 0, 0, 255, 64, 0, 0, 0, 0, 161, 64 )
+}
+
+[node name="Level2_5" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
+
+[node name="Bg" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="StardustSpawner" parent="." instance=ExtResource( 8 )]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="BossPath" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="BossFollow" type="PathFollow2D" parent="BossPath"]
+position = Vector2( 160, 64 )
+rotate = false
+script = ExtResource( 7 )
+
+[node name="TheTWord" parent="BossPath/BossFollow" instance=ExtResource( 4 )]
+
+[node name="StartLabel" type="Label" parent="."]
+margin_left = 127.0
+margin_top = 90.0
+margin_right = 197.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Get Ready!"
+
+[node name="EndLabel" type="Label" parent="."]
+visible = false
+margin_left = 110.0
+margin_top = 90.0
+margin_right = 214.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level Complete!"
+
+[node name="OnTop" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="UI" parent="OnTop" instance=ExtResource( 3 )]
+
+[node name="PauseMenu" parent="OnTop" instance=ExtResource( 6 )]
+visible = false

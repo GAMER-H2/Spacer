@@ -5,7 +5,7 @@ onready var bossProjectile = preload("res://enemies/projectiles/BossProjectile.t
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 onready var coinLoad = preload("res://physics/Coin.tscn")
 var rng = RandomNumberGenerator.new()
-var hp = 10
+var hp = 30
 
 func _ready():
 	rng.randomize()
@@ -31,7 +31,8 @@ func fire():
 	else:
 		gun = $Gun2
 	var player = get_tree().get_current_scene().get_node_or_null("Player")
-	bp.angle = gun.get_angle_to(player.global_position)
+	if (player != null):
+		bp.angle = gun.get_angle_to(player.global_position)
 	bp.global_position = gun.global_position
 	get_tree().get_current_scene().add_child(bp)
 

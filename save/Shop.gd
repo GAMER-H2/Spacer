@@ -45,17 +45,18 @@ func _process(delta):
 		if (currentPos >= 9):
 			currentPos = 0
 		$Cursor.global_position = positions[currentPos].global_position
-	if (Input.is_action_just_pressed("ui_focus_next")):
+	if (Input.is_action_just_pressed("ui_next")):
 		stateIndex += 1
 		if (stateIndex > 2):
 			stateIndex = 0
 		state = states[stateIndex]
 		changeStates()
-	if (Input.is_action_just_pressed("ui_focus_prev")):
+	if (Input.is_action_just_pressed("ui_prev")):
 		stateIndex -= 1
 		if (stateIndex < 0):
 			stateIndex = 2
 		state = states[stateIndex]
+		changeStates()
 	if (Input.is_action_just_pressed("ui_cancel")):
 		exit()
 	if (Input.is_action_just_pressed("ui_accept")):
