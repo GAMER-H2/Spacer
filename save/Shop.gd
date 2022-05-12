@@ -7,7 +7,7 @@ var miscValues = [50, 50, 100, 500, 500, 1000, 10000, 100000]
 var states = ["primary", "secondary", "misc"]
 var stateIndex = 0
 var state = states[stateIndex]
-var currentPos = 1
+var currentPos = 0
 var skipLevel = false
 var popInSpeed = 400
 

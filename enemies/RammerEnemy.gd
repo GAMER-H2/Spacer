@@ -37,17 +37,17 @@ func _ready( ):
 		diveChance = 1000
 		$Sprite.set_texture(sprite1)
 	elif (tier == 2):
-		hp = 2
+		hp = 3
 		speed = 150
 		diveChance = 750
 		$Sprite.set_texture(sprite2)
 	elif (tier == 3):
-		hp = 3
+		hp = 5
 		speed = 200
 		diveChance = 750
 		$Sprite.set_texture(sprite3)
 	elif (tier == 4):
-		hp = 4
+		hp = 7
 		speed = 250
 		diveChance = 500
 		$Sprite.set_texture(sprite4)

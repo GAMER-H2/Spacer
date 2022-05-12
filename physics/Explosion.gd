@@ -1,11 +1,16 @@
 extends Area2D
 
 onready var animation = $AnimatedSprite
+onready var sound = $Kaboom
 var damage = 2
 
-func _process(_delta):
+func _ready():
 	animation.play("default")
+	sound.play()
+
+func _process(_delta):
 	yield(animation, "animation_finished")
+	yield(sound, "finished")
 	queue_free()
 
 func _on_Explosion_area_entered(area):

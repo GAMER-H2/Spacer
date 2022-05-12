@@ -4,7 +4,7 @@ onready var singleSwarmLoad = preload("res://enemies/bosses/SwarmPiece.tscn")
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 onready var coinLoad = preload("res://physics/Coin.tscn")
 var rng = RandomNumberGenerator.new()
-var hp = 30
+var hp = 70
 
 func _ready():
 	rng.randomize()

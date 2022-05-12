@@ -3,14 +3,16 @@ extends AnimatedSprite
 var coinLoad = preload("res://physics/Coin.tscn")
 var rng = RandomNumberGenerator.new()
 var coinDone = false
+onready var sound = $Kaboom
 
 func _ready():
 	rng.randomize()
 	play("default")
+	sound.play()
 
 func _process(_delta):
 	if (!coinDone):
-		var chance = rng.randi_range(1,2)
+		var chance = rng.randi_range(1,4)
 		if (chance == 1):
 			var coin = coinLoad.instance()
 			coin.global_position = global_position
@@ -26,4 +28,5 @@ func _process(_delta):
 			get_tree().get_current_scene().add_child(coin)
 		coinDone = true
 	yield(self, "animation_finished")
+	yield(sound, "finished")
 	queue_free()

@@ -128,6 +128,10 @@ func _on_Player_area_entered(area):
 func shoot_primary():
 	#emit_signal("spawn_primary", gun.global_position)
 	if (laserTimer >= laserInterval):
+		if (primaryLaserIndex != 7):
+			$LaserSound.play()
+		else:
+			$AtomicRaySound.play()
 		laserTimer = 0
 		primaryLaserInstance = primaryLaser[primaryLaserIndex].instance()
 		addLaserToScene(primaryLaserInstance, primaryFireRate, gun.global_position)
@@ -140,6 +144,7 @@ func shoot_primary():
 
 func shoot_secondary():
 	if (missileTimer >= missileInterval):
+		$MissileSound.play()
 		missileTimer = 0
 		secondaryMissileInstance = secondaries[secondaryIndex].instance()
 		addLaserToScene(secondaryMissileInstance, secondaryFireRate, gun.global_position)
@@ -152,11 +157,13 @@ func addLaserToScene(instance, fireRate, pos):
 
 func remove_atomic_ray():
 	if (primaryLaserInstance != null):
+		$AtomicRaySound.stop()
 		get_tree().get_current_scene().remove_child(primaryLaserInstance)
 		primaryLaserInstance = null
 
 func generate_turret():
 	if (turretNum < 2):
+		$GenerateTurretSound.play()
 		var turret = secondaries[7].instance()
 		turret.global_position = global_position
 		if (turretNum == 0):

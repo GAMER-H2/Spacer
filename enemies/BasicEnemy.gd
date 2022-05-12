@@ -38,17 +38,17 @@ func _ready( ):
 		shootChance = 1500
 		$Sprite.set_texture(sprite1)
 	elif (tier == 2):
-		hp = 3
+		hp = 4
 		speed = 75
 		shootChance = 1250
 		$Sprite.set_texture(sprite2)
 	elif (tier == 3):
-		hp = 4
+		hp = 6
 		speed = 75
 		shootChance = 1000
 		$Sprite.set_texture(sprite3)
 	elif (tier == 4):
-		hp = 5
+		hp = 8
 		speed = 100
 		shootChance = 750
 		$Sprite.set_texture(sprite4)

@@ -2,7 +2,7 @@ extends Area2D
 
 export (int) var speed = 100
 export (String, "wait", "ai", "debug") var state = "wait"
-var hp = 30
+var hp = 50
 onready var enemyLaser = preload("res://enemies/projectiles/EnemyLaser.tscn")
 onready var bossProjectile = preload("res://enemies/projectiles/BossProjectile.tscn")
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")

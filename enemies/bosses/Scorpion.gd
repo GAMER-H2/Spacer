@@ -5,7 +5,7 @@ onready var bossProjectile = preload("res://enemies/projectiles/BossProjectile.t
 onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 onready var coinLoad = preload("res://physics/Coin.tscn")
 var rng = RandomNumberGenerator.new()
-var hp = 30
+var hp = 60
 
 func _ready():
 	rng.randomize()

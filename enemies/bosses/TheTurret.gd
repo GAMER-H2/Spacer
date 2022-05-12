@@ -10,7 +10,7 @@ var row3 = [false, true, true, false, false, false, false, false, true, true]
 var row4 = [false, true, false, false, false, false, true]
 var rows = [row1, row2, row3, row4]
 var rng = RandomNumberGenerator.new()
-var hp = 30
+var hp = 90
 var row = 1
 var rotationGoal = 0
 

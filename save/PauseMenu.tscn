@@ -1,24 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/ui/pause_menu.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/ui_cursor.png" type="Texture" id=2]
 [ext_resource path="res://save/PauseMenu.gd" type="Script" id=3]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor3.png" type="Texture" id=4]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor0.png" type="Texture" id=5]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor4.png" type="Texture" id=6]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor2.png" type="Texture" id=7]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor7.png" type="Texture" id=8]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor1.png" type="Texture" id=9]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor6.png" type="Texture" id=10]
-[ext_resource path="res://assets/ui/cursors/sprite_ui_cursor5.png" type="Texture" id=11]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 5 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "default",
-"speed": 12.0
-} ]
+[ext_resource path="res://save/Cursor.tscn" type="PackedScene" id=4]
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -63,7 +48,6 @@ position = Vector2( 128, 106 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 
-[node name="Cursor" type="AnimatedSprite" parent="."]
+[node name="Cursor" parent="." instance=ExtResource( 4 )]
 position = Vector2( 128, 106 )
-scale = Vector2( 1.2, 1.2 )
-frames = SubResource( 1 )
+frame = 6

@@ -7,7 +7,7 @@
 [ext_resource path="res://levels/Level.gd" type="Script" id=5]
 [ext_resource path="res://save/PauseMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://physics/StardustSpawner.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/sounds/music/TEMP_levelTheme.mp3" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/music/level_theme.wav" type="AudioStream" id=8]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -29,6 +29,7 @@ script = ExtResource( 5 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+volume_db = -6.0
 autoplay = true
 
 [node name="Bg" type="Sprite" parent="."]

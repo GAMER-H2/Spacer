@@ -7,7 +7,7 @@ onready var coinLoad = preload("res://physics/Coin.tscn")
 var rng = RandomNumberGenerator.new()
 var onLeft = false
 var previousPos = 200
-var hp = 10
+var hp = 40
 
 func _ready():
 	rng.randomize()

@@ -6,19 +6,19 @@ var speed = 50
 
 func _ready():
 	if (type == "silver"):
-		value = 10
+		value = 50
 		$Silver.visible = true
 		$Silver.play("default")
 	elif (type == "gold"):
-		value = 20
+		value = 100
 		$Gold.visible = true
 		$Gold.play("default")
 	elif (type == "blue"):
-		value = 35
+		value = 250
 		$Blue.visible = true
 		$Blue.play("default")
 	elif (type == "purple"):
-		value = 50
+		value = 500
 		$Purple.visible = true
 		$Purple.play("default")
 

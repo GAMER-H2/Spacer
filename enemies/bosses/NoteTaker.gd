@@ -5,7 +5,7 @@ onready var enemyDeathLoad = preload("res://physics/EnemyDeath.tscn")
 onready var coinLoad = preload("res://physics/Coin.tscn")
 onready var mainSprite = preload("res://assets/bosses/sprite_notetaker0.png")
 var rng = RandomNumberGenerator.new()
-var hp = 100
+var hp = 120
 var timer = 1
 const time = 1
 var go = false
@@ -28,8 +28,7 @@ func fireNote():
 	var note = noteLoad.instance()
 	var gunOptions = [$Gun1, $Gun2, $Gun3, $Gun4]
 	var gunChoice = rng.randi_range(0,3)
-	note.global_position = gunOptions[gunChoice].global_position
-	note.global_position.y += 28
+	note.global_position = Vector2(gunOptions[gunChoice].global_position.x, gunOptions[gunChoice].global_position.y + 28)
 	get_tree().get_current_scene().add_child(note)
 
 func take_damage(damage):

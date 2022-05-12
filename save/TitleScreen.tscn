@@ -6,7 +6,7 @@
 [ext_resource path="res://physics/StardustSpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/player.png" type="Texture" id=5]
 [ext_resource path="res://physics/Rocket.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/sounds/music/TEMP_titleTheme.mp3" type="AudioStream" id=7]
+[ext_resource path="res://assets/sounds/music/title_theme.wav" type="AudioStream" id=7]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -52,7 +52,7 @@ margin_bottom = 242.0
 grow_horizontal = 0
 grow_vertical = 0
 rect_scale = Vector2( 0.7, 0.7 )
-text = "Spacer - v1.0.1"
+text = "Spacer - v1.1.0"
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 160, 120 )

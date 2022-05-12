@@ -8,7 +8,7 @@
 [ext_resource path="res://save/PauseMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://levels/BossFollow.gd" type="Script" id=7]
 [ext_resource path="res://physics/StardustSpawner.tscn" type="PackedScene" id=8]
-[ext_resource path="res://assets/sounds/music/TEMP_bossTheme.mp3" type="AudioStream" id=9]
+[ext_resource path="res://assets/sounds/music/boss_theme.wav" type="AudioStream" id=9]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -20,6 +20,7 @@ script = ExtResource( 5 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
+volume_db = -4.0
 autoplay = true
 
 [node name="Bg" type="Sprite" parent="."]
