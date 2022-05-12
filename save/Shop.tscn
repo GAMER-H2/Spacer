@@ -239,7 +239,7 @@ rect_scale = Vector2( 0.8, 0.8 )
 text = "Exit"
 
 [node name="Cursor" parent="." instance=ExtResource( 2 )]
-frame = 1
+frame = 5
 
 [node name="Move" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
