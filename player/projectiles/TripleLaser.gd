@@ -25,6 +25,8 @@ func _ready():
 	bolt3.rotate(angle3-deg2rad(90))
 
 func _physics_process(delta):
+	if (bolt1 == null or bolt2 == null or bolt3 == null):
+		queue_free()
 	if (bolt1.get_child_count() != 0):
 		bolt1.global_position += velocity1 * -speed * delta
 		if (bolt1.global_position.x < 0 or bolt1.global_position.x > 320 or bolt1.global_position.y < 0 or bolt1.global_position.y > 240):

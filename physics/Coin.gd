@@ -3,6 +3,7 @@ extends Area2D
 var type = "silver"
 var value = 10
 var speed = 50
+onready var ding = $Ding
 
 func _ready():
 	if (type == "silver"):
@@ -30,5 +31,8 @@ func _physics_process(delta):
 
 func _on_Coin_area_entered(area):
 	if area is Player:
+		ding.play()
+		visible = false
 		area.moneyAdd(value)
+		yield(ding, "finished")
 		queue_free()

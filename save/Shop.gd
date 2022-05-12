@@ -46,12 +46,14 @@ func _process(delta):
 			currentPos = 0
 		$Cursor.global_position = positions[currentPos].global_position
 	if (Input.is_action_just_pressed("ui_next")):
+		$Move.play()
 		stateIndex += 1
 		if (stateIndex > 2):
 			stateIndex = 0
 		state = states[stateIndex]
 		changeStates()
 	if (Input.is_action_just_pressed("ui_prev")):
+		$Move.play()
 		stateIndex -= 1
 		if (stateIndex < 0):
 			stateIndex = 2
